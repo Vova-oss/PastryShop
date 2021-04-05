@@ -28,6 +28,7 @@ public class UserService {
     }
 
     @Transactional
+    //На самом деле он находит по логину!!!
     public User findUserByName(String name) {
         return userRepository.findByLogin(name);
     }
@@ -36,4 +37,16 @@ public class UserService {
     public List<User> findAllUsers(){
         return userRepository.findAll();
     }
+
+    public void editProfile(User user, String login){
+        User fromDb = findUserByName(login);
+        fromDb.setLogin(user.getLogin());
+        fromDb.setEmail(user.getEmail());
+        fromDb.setPassword(passwordEncoder.encode(user.getPassword()));
+        fromDb.setName(user.getName());
+        fromDb.setSurname(user.getSurname());
+        fromDb.setTelephone_number(user.getTelephone_number());
+        userRepository.save(fromDb);
+    }
+
 }

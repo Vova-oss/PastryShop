@@ -46,6 +46,7 @@ public class User  {
 
     private String role = "ROLE_USER";
 
+    @NotBlank(message = "Некорректные данные")
     private String telephone_number;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)

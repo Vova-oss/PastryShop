@@ -5,9 +5,10 @@
     <title>Title</title>
 </head>
 <body>
-<form action="/registrationAction" method="get" >
+
+<form action="/person/editProfileAction" method="get" >
     <h3>Регистрация</h3>
-<!--    <span style="color: red" th:text="${UserAlreadyExist}"></span>-->
+    <!--    <span style="color: red" th:text="${UserAlreadyExist}"></span>-->
     <br>
     <input type="text" name="surname" placeholder="Фамилия" th:value="${currentSurname}">
     <span style="color:red" th:text="${surname}"></span>
@@ -16,12 +17,7 @@
     <input type="text" name="name" placeholder="Имя" th:value="${currentName}">
     <span style="color:red" th:text="${name}"></span>
     <br>
-    <br>
-    Изменить логин будет невозможно!
-    <br>
-    <input type="text" name="login" placeholder="Логин" th:value="${currentLogin}">
-    <span style="color:red" th:text="${login}"></span>
-    <br>
+    <input type="hidden" name="login" placeholder="Логин" th:value="${currentLogin}">
     <br>
     <input type="text" name="password" placeholder="Пароль" th:value="${currentPassword}">
     <span style="color:red" th:text="${password}"></span>
@@ -30,16 +26,23 @@
     <input type="text" name="email" placeholder="Email" th:value="${currentEmail}">
     <span style="color:red" th:text="${email}"></span>
     <br>
+    <br>
     <input type="text" name="telephone_number" placeholder="Телефонный номер" th:value="${currentTelephoneNumber}">
     <span style="color:red" th:text="${telephone_number}"></span>
     <br>
+    <br>
+    <br>
 
-<!--    <input type="password" name="password" placeholder="Пароль">-->
+    <br>
+    <input type="text" name="realPassword" placeholder="Введите действующий пароль" th:value="${realPassword}">
+    <span style="color:red" th:text="${uncorrectedPassword}"></span>
+    <br>
+    <!--    <input type="password" name="password" placeholder="Пароль">-->
     <!-- <input type="text" name="role" placeholder="ROLE_ADMIN or ROLE_USER?"> -->
     <br>
 
-    <div><input type="submit" value="Зарегистрироваться"/></div>
-    <a href = "/login">Вы уже зарегистрированы?</a>
+    <div><input type="submit" value="Изменить данные"/></div>
 </form>
+
 </body>
 </html>
