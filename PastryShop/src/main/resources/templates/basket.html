@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Корзина</title>
+</head>
+<body>
+
+
+<!--[[ ${#numbers.formatDecimal(55.466 == null ? 0 : 55.466, 0, 2)} ]]-->
+
+
+<table>
+    <tr>
+        <th>Картинка</th>
+        <th>Название</th>
+        <th>Цена</th>
+        <th>Количество</th>
+        <th>Общая стоимость</th>
+    </tr>
+
+    <form th:each="prod: ${products}" method="post" action="/person/actionInBasket">
+        <tr>
+            <th>
+                <img width="100px" height="100px" th:src="@{${prod.pathOfPicture}}" alt="" />
+            </th>
+            <th>[[${prod.nameOfProduct}]]</th>
+            <th>[[${prod.price}]]</th>
+            <th>[[${prod.amount}]]</th>
+            <th>[[ ${prod.price}*${prod.amount} ]]</th>
+
+            <th>
+
+                <form method="post" action="/person/actionInBasket">
+                    <input value="-" type="submit" >
+                    <input type="hidden" name="nameOfProduct" th:value="${prod.nameOfProduct}">
+                    <input type="hidden" name="operation" value="-" >
+                </form>
+
+            </th>
+            <th>
+                <form method="post" action="/person/actionInBasket">
+                    <input value="+" type="submit" th:attr="disabled=${prod.available}>0 ? false : true">
+                    <input type="hidden" name="nameOfProduct" th:value="${prod.nameOfProduct}">
+                    <input type="hidden" name="operation" value="+" >
+                </form>
+            </th>
+        </tr>
+
+
+    </form>
+</table>
+<br>
+<a href="/person/personalAccount">Nazad</a>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<a href="/person/profile" >Ссылка на профиль</a>
+<br>
+<a href="/person/basket">Корзина</a>
+<br><br>
+
+
+
+<table>
+    <tr>
+        <th>Картинка</th>
+        <th>Название</th>
+        <th>Цена</th>
+        <th>Количество</th>
+    </tr>
+
+    <form th:each="prod: ${product}" method="post" action="/person/check">
+        <tr>
+            <th>
+                <img width="100px" height="100px" th:src="@{${prod.pathOfPicture}}" alt="" />
+            </th>
+            <th>[[${prod.typeProduct}]]</th>
+            <th>[[${prod.price}]] рублей</th>
+            <th>[[${prod.amount}]]</th>
+            <th>
+                <input type="hidden" name="product_id" th:value="${prod.id}"/>
+                <input value="Добавить в корзину" type="submit" th:attr="disabled=${prod.amount}>0 ? false : true">
+            </th>
+        </tr>
+
+
+    </form>
+</table>
+
+
+
+</body>
+</html>

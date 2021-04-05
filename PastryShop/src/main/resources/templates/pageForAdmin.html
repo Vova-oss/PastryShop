@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<table>
+
+    <h2>Вся продукция на складе (не включая то, что пользователи добавили в корзины)</h2>
+    <tr>
+        <th>Картинка</th>
+        <th>Название</th>
+        <th>Цена</th>
+        <th>Количество</th>
+        <th>ВООБЩЕ ВСЁ КОЛИЧЕСТВО</th>
+    </tr>
+
+    <form th:each="prod: ${Products}" method="post" action="/admin/check">
+        <tr th:each="all: ${allProducts}" th:if="${prod.typeProduct} == ${all.typeProduct}">
+            <th>
+                <img width="100px" height="100px" th:src="@{${prod.pathOfPicture}}" alt="" />
+            </th>
+            <th>[[${prod.typeProduct}]]</th>
+            <th>[[${prod.price}]] рублей</th>
+            <th>[[${prod.amount}]]</th>
+            <th>[[${all.amount}]]</th>
+
+            <th>
+                    <input value="Удалить" type="submit" name="operation">
+            </th>
+            <th>
+                <input type="number" name="amount_of_product" min="1" placeholder="N-ое количество">
+            </th>
+            <th>
+                    <input value="Добавить" type="submit" name="operation">
+                    <input type="hidden" name="nameOfProduct" th:value="${prod.typeProduct}">
+            </th>
+
+            <th>
+                <input value="Стереть товар" type="submit" name="operation">
+            </th>
+        </tr>
+
+    </form>
+
+</table>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<h2>Добавление новой продукции</h2>
+
+<form method="post" enctype="multipart/form-data" action="/admin/addProduct">
+
+    <table>
+        <tr>
+            <th>Наименование</th>
+            <th><input type="text" name="nameOfNewProduct"></th>
+            <th><span style="color:red" th:text="${NameExists}"></span></th>
+        </tr>
+        <tr>
+            <th>Цена за единицу товара</th>
+            <th><input type="number" min="0" value="0" name="priceOfNewProduct"></th>
+        </tr>
+        <tr>
+            <th>Количество</th>
+            <th><input type="number" min="0" value="0" name="amountOfNewProduct"></th>
+        </tr>
+        <tr>
+            <th>Картинка</th>
+            <th><input type="file" name="pictureOfProduct"></th>
+        </tr>
+
+    </table>
+
+    <input type="submit" value="Добавить товар">
+    <br>
+    <a href="/logout">Выйти из аккаунта</a>
+</form>
+
+
+
+<br>
+<br>
+<br>
+<a href="/admin/monitorsUsers">Просмотреть коризны пользователей</a>
+
+
+
+
+<!--<img th:src="@{${fileName}}" alt="" />-->
+<!--<img th:src="@{/images/ffff.jpg}" alt="" />-->
+<img src="C:/Users/vovap/Desktop/images/Q47FAsFjKhA.jpg">
+
+</body>
+</html>
