@@ -6,9 +6,9 @@
 </head>
 <body>
 
-<a href="/person/profile" >Ссылка на профиль</a>
+<a href="/profile" >Ссылка на профиль</a>
 <br>
-<a href="/person/basket">Корзина</a>
+<a href="/basket">Корзина</a>
 <br><br>
 
 
@@ -21,7 +21,7 @@
         <th>Количество</th>
     </tr>
 
-    <form th:each="prod: ${product}" method="post" action="/person/check">
+    <form th:each="prod: ${product}" method="post" action="/check">
         <tr>
             <th>
                 <img width="100px" height="100px" th:src="@{${prod.pathOfPicture}}" alt="" />

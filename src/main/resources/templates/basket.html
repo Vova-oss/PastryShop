@@ -19,7 +19,7 @@
         <th>Общая стоимость</th>
     </tr>
 
-    <form th:each="prod: ${products}" method="post" action="/person/actionInBasket">
+    <form th:each="prod: ${products}" method="post" action="/actionInBasket">
         <tr>
             <th>
                 <img width="100px" height="100px" th:src="@{${prod.pathOfPicture}}" alt="" />
@@ -31,7 +31,7 @@
 
             <th>
 
-                <form method="post" action="/person/actionInBasket">
+                <form method="post" action="/actionInBasket">
                     <input value="-" type="submit" >
                     <input type="hidden" name="nameOfProduct" th:value="${prod.nameOfProduct}">
                     <input type="hidden" name="operation" value="-" >
@@ -39,7 +39,7 @@
 
             </th>
             <th>
-                <form method="post" action="/person/actionInBasket">
+                <form method="post" action="/actionInBasket">
                     <input value="+" type="submit" th:attr="disabled=${prod.available}>0 ? false : true">
                     <input type="hidden" name="nameOfProduct" th:value="${prod.nameOfProduct}">
                     <input type="hidden" name="operation" value="+" >
@@ -51,6 +51,6 @@
     </form>
 </table>
 <br>
-<a href="/person/personalAccount">Nazad</a>
+<a href="/personalAccount">Nazad</a>
 </body>
 </html>
