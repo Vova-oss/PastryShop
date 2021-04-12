@@ -37,8 +37,8 @@ public class AdminController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/pageForAdmin{nameExists}")
-    public String pageForAdmin(Model model, @PathVariable(required = false) String nameExists){
+    @GetMapping("/pageForAdmin")
+    public String pageForAdmin(Model model){
 
         List<Basket> baskets = basketService.findAllSorted();
         List<Product> products = productService.findAllSorted();
@@ -49,8 +49,10 @@ public class AdminController {
             }
         }
 
-        if(nameExists.equals("NameExists"))
-            model.addAttribute("NameExists","Товар с таким названием уже существует");
+//        if(SomethingWrong.equals("NameExists"))
+//            model.addAttribute("NameExists","Товар с таким названием уже существует");
+//        if(SomethingWrong.equals("PictureIsNull"))
+//            model.addAttribute("PictureIsNull","Картинка не должна быть пуста");
         model.addAttribute("Products",productService.findAllSorted());
         model.addAttribute("allProducts",products);
 
@@ -62,6 +64,49 @@ public class AdminController {
 
 //        model.addAttribute("productsInBasket",basketService.findAllSorted());
         return "pageForAdmin";
+    }
+
+    @PostMapping("/addProduct")
+    public String addProduct(@RequestParam(name="nameOfNewProduct")String nameOfNewProduct,
+                             @RequestParam(name="priceOfNewProduct")String priceOfNewProduct,
+                             @RequestParam(name="amountOfNewProduct")String amountOfNewProduct,
+                             @RequestParam(name = "pictureOfProduct") MultipartFile file,
+                             Model model){
+
+        System.out.println(file.getOriginalFilename());
+        System.out.println(file.getName());
+
+
+        if(productService.findByTypeProduct(nameOfNewProduct)!=null ||
+                file.getOriginalFilename().equals("") ||
+                priceOfNewProduct.equals("") ||
+                amountOfNewProduct.equals("")){
+            if(file.getOriginalFilename().equals(""))
+                model.addAttribute("PictureIsNull","Картинка не должна быть пуста");
+            if(productService.findByTypeProduct(nameOfNewProduct)!=null)
+                model.addAttribute("NameExists","Товар с таким названием уже существует");
+            if(priceOfNewProduct.equals(""))
+                model.addAttribute("PriceIsNull","Введите цену");
+            if(amountOfNewProduct.equals(""))
+                model.addAttribute("AmountIsNull","Введите количество товара");
+            return pageForAdmin(model);
+        }
+
+
+
+
+        String uuid = UUID.randomUUID().toString();
+        String fileName = uuid + file.getOriginalFilename();
+        String wayOfFile = uploadPath + "/" + fileName;
+        try {
+            file.transferTo(new File(wayOfFile));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        productService.addNewProduct(nameOfNewProduct,priceOfNewProduct,amountOfNewProduct,fileName);
+
+        return "redirect:/admin/pageForAdmin";
     }
 
     @PostMapping("/check")
@@ -97,31 +142,6 @@ public class AdminController {
 
 //        model.addAttribute("productsInBasket",basketService.findAllSorted());
         return "adminMonitorsUsers";
-    }
-
-    @PostMapping("/addProduct")
-    public String addProduct(@RequestParam(name="nameOfNewProduct")String nameOfNewProduct,
-                             @RequestParam(name="priceOfNewProduct")String priceOfNewProduct,
-                             @RequestParam(name="amountOfNewProduct")String amountOfNewProduct,
-                             @RequestParam(name = "pictureOfProduct") MultipartFile file,
-                             Model model){
-
-
-        if(productService.findByTypeProduct(nameOfNewProduct)!=null)
-            return "redirect:/admin/pageForAdminNameExists";
-
-        String uuid = UUID.randomUUID().toString();
-        String fileName = uuid + file.getOriginalFilename();
-        String wayOfFile = uploadPath + "/" + fileName;
-        try {
-            file.transferTo(new File(wayOfFile));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        productService.addNewProduct(nameOfNewProduct,priceOfNewProduct,amountOfNewProduct,fileName);
-
-        return "redirect:/admin/pageForAdmin";
     }
 
     @PreDestroy()

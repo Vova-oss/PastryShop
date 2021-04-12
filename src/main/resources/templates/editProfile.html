@@ -6,35 +6,60 @@
 </head>
 <body>
 
-<form action="/person/editProfileAction" method="get" >
+<form action="/editProfileAction" method="get" >
     <h3>Регистрация</h3>
     <!--    <span style="color: red" th:text="${UserAlreadyExist}"></span>-->
     <br>
-    <input type="text" name="surname" placeholder="Фамилия" th:value="${currentSurname}">
-    <span style="color:red" th:text="${surname}"></span>
-    <br>
-    <br>
-    <input type="text" name="name" placeholder="Имя" th:value="${currentName}">
-    <span style="color:red" th:text="${name}"></span>
-    <br>
-    <input type="hidden" name="login" placeholder="Логин" th:value="${currentLogin}">
-    <br>
-    <input type="text" name="password" placeholder="Пароль" th:value="${currentPassword}">
-    <span style="color:red" th:text="${password}"></span>
-    <br>
-    <br>
-    <input type="text" name="email" placeholder="Email" th:value="${currentEmail}">
-    <span style="color:red" th:text="${email}"></span>
-    <br>
-    <br>
-    <input type="text" name="telephone_number" placeholder="Телефонный номер" th:value="${currentTelephoneNumber}">
-    <span style="color:red" th:text="${telephone_number}"></span>
+    <table>
+
+
+        <tr>
+            <th>Фамилия</th>
+            <th><input type="text" name="surname" th:value="${currentSurname}"></th>
+            <th><span style="color:red" th:text="${surname}"></span></th>
+        </tr>
+
+
+        <tr>
+            <th>Имя</th>
+            <th><input type="text" name="name" th:value="${currentName}"></th>
+            <th><span style="color:red" th:text="${name}"></span></th>
+        </tr>
+
+
+        <tr>
+            <th>Email</th>
+            <th><input type="text" name="email" th:value="${currentEmail}"></th>
+            <th><span style="color:red" th:text="${email}"></span></th>
+        </tr>
+
+        <tr>
+            <th>Телефонный номер</th>
+            <th><input type="text" name="telephone_number" th:value="${currentTelephoneNumber}"></th>
+            <th><span style="color:red" th:text="${telephone_number}"></span></th>
+        </tr>
+
+
+        <tr>
+
+            <input type="hidden" name="login" placeholder="Логин" th:value="${currentLogin}">
+            <th>Новый пароль</th>
+            <th><input type="text" name="password" th:value="${currentPassword}"></th>
+            <th><span style="color:red" th:text="${password}"></span></th>
+        </tr>
+
+
+
+    </table>
+
     <br>
     <br>
     <br>
 
     <br>
-    <input type="text" name="realPassword" placeholder="Введите действующий пароль" th:value="${realPassword}">
+    <label>
+        <input type="text" name="realPassword" placeholder="Действующий пароль" th:value="${realPassword}">
+    </label>
     <span style="color:red" th:text="${uncorrectedPassword}"></span>
     <br>
     <!--    <input type="password" name="password" placeholder="Пароль">-->
@@ -43,6 +68,10 @@
 
     <div><input type="submit" value="Изменить данные"/></div>
 </form>
+
+<br>
+<br>
+<a href="/profile">Назад</a>
 
 </body>
 </html>

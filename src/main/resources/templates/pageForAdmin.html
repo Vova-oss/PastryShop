@@ -66,14 +66,17 @@
         <tr>
             <th>Цена за единицу товара</th>
             <th><input type="number" min="0" value="0" name="priceOfNewProduct"></th>
+            <th><span style="color:red" th:text="${PriceIsNull}"></span></th>
         </tr>
         <tr>
             <th>Количество</th>
             <th><input type="number" min="0" value="0" name="amountOfNewProduct"></th>
+            <th><span style="color:red" th:text="${AmountIsNull}"></span></th>
         </tr>
         <tr>
             <th>Картинка</th>
             <th><input type="file" name="pictureOfProduct"></th>
+            <th><span style="color:red" th:text="${PictureIsNull}"></span></th>
         </tr>
 
     </table>

@@ -18,12 +18,13 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
 
 
 @Controller
-@RequestMapping("/person")
+//@RequestMapping("/person")
 public class PersonController {
 
     @Autowired
@@ -43,6 +44,8 @@ public class PersonController {
         model.addAttribute("login",user.getLogin());
         model.addAttribute("email",user.getEmail());
         model.addAttribute("telephoneNumber",user.getTelephone_number());
+
+
         return "profile";
     }
 
@@ -64,7 +67,7 @@ public class PersonController {
         Product product = productService.findById(id);
         if(productService.deleteOneAmountOfProduct(product))
             basketService.saveOrUpdateOneAmountOfProduct(product);
-        return "redirect:/person/personalAccount";
+        return "redirect:/personalAccount";
     }
 
     @PostMapping("/actionInBasket")
@@ -81,7 +84,7 @@ public class PersonController {
             productService.addOneAmountOfProduct(product);
         }
 
-        return "redirect:/person/basket";
+        return "redirect:/basket";
     }
 
     @GetMapping("/editProfile")
@@ -108,7 +111,8 @@ public class PersonController {
     public String editProfile(@ModelAttribute @Valid User user,
                               Errors errors,
                               Model model,
-                              @RequestParam("realPassword") String realPassword){
+                              @RequestParam("realPassword") String realPassword,
+                              HttpServletResponse response){
 
         User currentUser = userService.findUserByName(SecurityContextHolder.getContext().getAuthentication().getName());
         if(errors.hasErrors()
@@ -138,8 +142,14 @@ public class PersonController {
 
         userService.editProfile(user, currentUser.getLogin());
 
+        Cookie pCookie = new Cookie("password", user.getPassword());
+        pCookie.setMaxAge(60*60*24*365);
+        response.addCookie(pCookie);
 
-        return "redirect:/person/profile";
+        return "redirect:/profile";
     }
+
+
+
 
 }

@@ -24,9 +24,17 @@ public class StartController {
     @Autowired
     UserService userService;
 
+    @GetMapping("/ppss")
+    public String ppss(HttpServletResponse response){
+        response.addCookie(new Cookie("ppppp","vvvvv"));
+        return "redirect:/person/profile";
+    }
+
     @GetMapping("/postCookie")
     public String setCooliePost(HttpServletResponse response){
         User user = userService.findUserByName(SecurityContextHolder.getContext().getAuthentication().getName());
+
+        response.addCookie(new Cookie("pp","nn"));
 
 //        Cookie pCookie = new Cookie("password",user.getPassword());
 //        Cookie lCookie = new Cookie("login", user.getLogin());
@@ -37,7 +45,7 @@ public class StartController {
 
         if(user.getRole().equals("ROLE_ADMIN"))
             return "redirect:/admin/pageForAdmin";
-        return "redirect:/person/personalAccount";
+        return "redirect:/personalAccount";
 
     }
 
@@ -66,6 +74,11 @@ public class StartController {
 
     @GetMapping("/registration")
     public String registration(){
+
+        if(userService.findUserByName(SecurityContextHolder.getContext().getAuthentication().getName())!=null){
+            return "redirect:/postCookie";
+        }
+
         return "registration";
     }
 
@@ -114,7 +127,7 @@ public class StartController {
             System.out.println(c.getName());
             System.out.println(c.getValue());
         }
-        return "login";
+        return "main";
     }
 
 
