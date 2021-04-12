@@ -3,6 +3,7 @@ package com.example.demo.Services;
 import com.example.demo.Entity.Product;
 import com.example.demo.Repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -13,6 +14,9 @@ import java.util.stream.Stream;
 
 @Service
 public class ProductService {
+
+    @Value("${upload.path.without.images}")
+    String uploadPathWithoutImages;
 
     @Autowired
     ProductRepository productRepository;
@@ -77,7 +81,7 @@ public class ProductService {
 
     public void eraseProductByName(String nameOfProduct) {
         Product product = findByTypeProduct(nameOfProduct);
-        File file = new File("C:/Users/vovap/Desktop/PastryShop/src/main/resources/static"+product.getPathOfPicture());
+        File file = new File(uploadPathWithoutImages+product.getPathOfPicture());
         file.delete();
         productRepository.delete(product);
     }
