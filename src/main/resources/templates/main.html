@@ -1,15 +1,218 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Главная страница</title>
+    <style>
+        a{
+            text-decoration: none;
+        }
+        .button{
+            position: static;
+            float: right;
+            border: 1px solid black;
+            border-radius: 1px;
+            text-align: right;
+            background-clip: border-box;
+            padding: 5px;
+            background-color: blue;
+            opacity: 0.3;
+        }
+        .button2{
+            float: right;
+            clear: none;
+            border: 1px solid black;
+            border-radius: 1px;
+            padding: 5px;
+            background-color: blue;
+            opacity: 0.3;
+        }
+        .caption {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 100%;
+            text-align: center;
+            color: #000;
+        }
+        .caption span.border {
+            background-color: #111;
+            color: #fff;
+            padding: 18px;
+            font-size: 25px;
+            letter-spacing: 10px;
+            border-radius: 5px;
+        }
+        .img-1 {
+            background-image: url("../static/products/foto1.jpg");
+            min-height: 100%;
+        }
+
+        .img-1{
+            position: relative;
+            opacity: 0.65;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        body, html {
+            height: 100%;
+            margin: 0;
+            font: 400 15px/1.8 "Lato", sans-serif;
+            color: #777;
+        }
+        * {box-sizing:border-box}
+
+        /* Slideshow container */
+        .slideshow-container {
+            max-width: 700px;
+            position: relative;
+            margin: auto;
+        }
+
+        /* Hide the images by default */
+        .mySlides {
+            display: none;
+        }
+        /* Next & previous buttons */
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            margin-top: -22px;
+            padding: 16px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+        }
+
+        /* Position the "next button" to the right */
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        /* On hover, add a black background color with a little bit see-through */
+        .prev:hover, .next:hover {
+            background-color: rgba(0,0,0,0.8);
+        }
+        .text {
+            color: #f2f2f2;
+            font-size: 15px;
+            padding: 8px 12px;
+            position: absolute;
+            bottom: 8px;
+            width: 100%;
+            text-align: center;
+        }
+        .dot {
+            cursor: pointer;
+            height: 15px;
+            width: 15px;
+            margin: 0 2px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+        }
+
+        .active, .dot:hover {
+            background-color: #717171;
+        }
+
+        /* Fading animation */
+        .fade {
+            -webkit-animation-name: fade;
+            -webkit-animation-duration: 1.5s;
+            animation-name: fade;
+            animation-duration: 1.5s;
+        }
+
+        @-webkit-keyframes fade {
+            from {opacity: .4}
+            to {opacity: 1}
+        }
+
+        @keyframes fade {
+            from {opacity: .4}
+            to {opacity: 1}
+        }
+    </style>
 </head>
-<body>
+<body link="red" vlink="#cecece" alink="#ff0000">
 
-<h1>Главная страница магазина</h1>
+<div class="img-1" style="" >
+    <div style="">
+        <a href="/registration" class="button">Регистрация</a>
+        <a href="/login" class="button2">Вход</a>
+    </div>
+    <div class="caption" >
+        <span class="border">Привет! Ты на главной странице</span>
+    </div>
+</div>
+<div style="color: #777; background-color: white; text-align: center; padding: 50px 80px; text-align: justify" >
+    <h2 style="text-align: center;">Для пользования нашим сайтом небоходимо зарегистрироваться или авторизироваться.</h2>
+    <h3 style="text-align: center;">Некоторые позиции из нашей продукции</h3>
+</div>
+<div class="slideshow-container">
+    <div class="mySlides fade">
+        <img th:src="@{images/ffff.jpg}" style="width:100%"/>
+        <div class="text">Блены</div>
+    </div>
 
-<a href="/login">Авторизоваться</a>
-<a href="/registration">Зарегистрироваться</a>
+    <div class="mySlides fade">
+        <img th:src="@{products/foto2.jpg}" style="width:100%"/>
+        <div class="text">Блены</div>
+    </div>
 
+    <div class="mySlides fade">
+        <img th:src="@{../products/foto2.jpg}" style="width:100%"/>
+<!--        <img th:src="@{/Products/foto2.jpg}" style="width:100%">-->
+        <div class="text">Блены</div>
+    </div>
+
+    <!-- Next and previous buttons -->
+    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+</div>
+
+<!-- The dots/circles -->
+<div style="text-align:center">
+    <span class="dot" onclick="currentSlide(1)"></span>
+    <span class="dot" onclick="currentSlide(2)"></span>
+    <span class="dot" onclick="currentSlide(3)"></span>
+</div>
+<script>
+    var slideIndex = 1;
+    showSlides(slideIndex);
+
+    function plusSlides(n) {
+        showSlides(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+        showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        var dots = document.getElementsByClassName("dot");
+        if (n > slides.length) {slideIndex = 1}
+        if (n < 1) {slideIndex = slides.length}
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex-1].style.display = "block";
+        dots[slideIndex-1].className += " active";
+    }
+</script>
 </body>
 </html>

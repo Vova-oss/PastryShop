@@ -3,16 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        body{
+            margin:0;
+            padding: 0;
+            font-family: sans-serif;
+            background: #34459e;
+        }
+        .box{
+            width: 300px;
+            padding: 25px;
+            position: absolute;
+            top:50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            background: #191919;
+            text-align: center;
+            border-radius: 10px
+        }
+        .box h3{
+            color:white;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+        .box input[type="text"], .box input[type="password"]{
+            border: 0;
+            background: none;
+            display: block;
+            margin: 20px auto;
+            text-align: center;
+            border: 2px solid #3498db;
+            padding: 10px 5px;
+            width: 200px;
+            outline: none;
+            color: white;
+            border-radius: 20px;
+            transition: 0.25s;
+            font-size: 18px;
+        }
+        .box input[type="text"]:focus, .box input[type="password"]:focus{
+            width: 280px;
+            border-color: #2ecc71;
+        }
+        .box input[type="submit"]{
+            border: 0;
+            background: none;
+            display: block;
+            margin: 20px auto;
+            text-align: center;
+            border: 2px solid #2ecc71;
+            padding: 10px 15px;
+            outline: none;
+            color: white;
+            border-radius: 24px;
+            transition: 0.25s;
+            font-size: 18px;
+        }
+        .box input[type="submit"]:hover{
+            background: #2ecc71;
+        }
+    </style>
 </head>
 <body>
-<form method="post">
+<form method="post" class="box">
     <h3>Авторизация</h3>
-    <span style="color: red" th:text="${IncorrectData}"></span>
+    <span th:text="${IncorrectData}"></span>
     <br>
     <input type="text" name="username" placeholder="Логин" th:value="${login}"/>
     <input type="password" name="password" placeholder="Пароль" th:value="${password}"/>
-    <a href="/registration">Регистрация</a>
     <div><input type="submit" value="Авторизоваться" /></div>
+    <h4 style="color:grey">Ещё не зарегистрированы?</h4>
+    <h3 style="color:grey">↓</h3>
+    <a href="/registration">Регистрация</a>
 </form>
+
 </body>
 </html>
