@@ -39,6 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/getCookie").permitAll()
                 .antMatchers("/end").permitAll()
                 .antMatchers("/admin/*").hasRole("ADMIN")
+                .antMatchers("/products/*").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new CustomFilter("/login", authenticationManager()), UsernamePasswordAuthenticationFilter.class)

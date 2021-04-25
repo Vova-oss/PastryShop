@@ -2,17 +2,78 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Изменение данных</title>
+    <style type="text/css">
+                body{
+            margin:0;
+            padding: 0;
+            font-family: sans-serif;
+            background: #34459e;
+        }
+        .box{
+            width: 350px;
+            padding: 20px;
+            position: absolute;
+            top:50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            background: #191919;
+            text-align: center;
+            border-radius: 10px
+        }
+        .box h3{
+            color:white;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+        .box input[type="text"], .box input[type="password"]{
+            border: 0;
+            background: none;
+            display: block;
+            margin: 10px auto;
+            text-align: center;
+            border: 2px solid #3498db;
+            padding: 10px 5px;
+            width: 150px;
+            outline: none;
+            color: white;
+            border-radius: 20px;
+            transition: 0.25s;
+            font-size: 16px;
+        }
+        .box input[type="text"]:focus, .box input[type="password"]:focus{
+            width: 170px;
+            border-color: #2ecc71;
+        }
+        .box input[type="submit"]{
+            border: 0;
+            background: none;
+            display: block;
+            margin: 20px auto;
+            text-align: center;
+            border: 2px solid #2ecc71;
+            padding: 10px 15px;
+            outline: none;
+            color: white;
+            border-radius: 24px;
+            transition: 0.25s;
+            font-size: 16px;
+        }
+        .box input[type="submit"]:hover{
+            background: #2ecc71;
+        }
+        th{
+
+        }
+    </style>
 </head>
 <body>
 
-<form action="/editProfileAction" method="get" >
-    <h3>Регистрация</h3>
+<form action="/editProfileAction" method="get" class="box">
+    <h3 style="text-align:center">Изменение данных пользователя</h3>
     <!--    <span style="color: red" th:text="${UserAlreadyExist}"></span>-->
     <br>
-    <table>
-
-
+    <table style="margin: auto"> 
         <tr>
             <th>Фамилия</th>
             <th><input type="text" name="surname" th:value="${currentSurname}"></th>
@@ -66,7 +127,7 @@
     <!-- <input type="text" name="role" placeholder="ROLE_ADMIN or ROLE_USER?"> -->
     <br>
 
-    <div><input type="submit" value="Изменить данные"/></div>
+    <div style="margin: auto"><input type="submit" value="Изменить данные"/></div>
 </form>
 
 <br>

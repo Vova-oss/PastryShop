@@ -3,13 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <title>Профиль</title>
+    <style type="text/css">
+        table {
+            width: 40%;
+            margin: auto;
+            border-spacing: 0;
+            border: 1px solid;
+            border-radius: 10px;
+            border-collapse: separate;
+        }
+        th{
+            border-left: 1px solid;
+            border-top: 1px solid;
+        }
+        th {
+            height: 50px;
+        }
+
+        th:first-child {
+            border-left: none;
+
+        }
+        a {
+            text-decoration: none; /* Отменяем подчеркивание у ссылки */
+        }
+    </style>
 </head>
 <body>
 
+<div style="text-align: center;">
+    <h2 >Личные данные пользователя</h2>
+</div>
+<div style="float: left; width: 50%">
+    <h3>
+        <a href="/personalAccount">Вернуться</a>
+    </h3>
+</div>
+<div style=" float: right; text-align: right; width: 50%">
+    <h3>
+        <a href="/logout">Выйти из аккаунта</a>
+    </h3>
+</div>
 <table>
     <tr>
-        <th>Фамилия</th>
-        <th>[[${surname}]]</th>
+        <th style="border-top: none; ">Фамилия</th>
+        <th style="border-top: none; ">[[${surname}]]</th>
     </tr>
     <tr>
         <th>Имя</th>
@@ -30,10 +68,15 @@
 </table>
 <br>
 
-<a href="/personalAccount">Назад</a>
-<br>
-<a href="/editProfile">Редактировать данные</a>
-<br>
-<a href="/logout">Выйти из аккаунта</a>
+<div style="border: 2px solid; width:15%; margin: auto; text-align: center; border-radius: 10px; background: orange;">
+    <a href="/editProfile">
+        <h3>
+            Редактировать данные
+        </h3>
+    </a>
+</div>
+
+<img th:src="@{../images/ffff.jpg}" alt=""/>
+<img th:src="@{/products/foto2.jpg}" alt=""/>
 </body>
 </html>
