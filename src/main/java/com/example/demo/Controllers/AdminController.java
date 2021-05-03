@@ -40,21 +40,21 @@ public class AdminController {
     @GetMapping("/pageForAdmin")
     public String pageForAdmin(Model model){
 
-        List<Basket> baskets = basketService.findAllSorted();
-        List<Product> products = productService.findAllSorted();
-        for(Basket basket:baskets){
-            for (Product product:products){
-                if(basket.getNameOfProduct().equals(product.getTypeProduct()))
-                    product.setAmount(product.getAmount()+basket.getAmount());
-            }
-        }
+//        List<Basket> baskets = basketService.findAllSorted();
+//        List<Product> products = productService.findAllSorted();
+//        for(Basket basket:baskets){
+//            for (Product product:products){
+//                if(basket.getNameOfProduct().equals(product.getTypeProduct()))
+//                    product.setAmount(product.getAmount()+basket.getAmount());
+//            }
+//        }
 
 //        if(SomethingWrong.equals("NameExists"))
 //            model.addAttribute("NameExists","Товар с таким названием уже существует");
 //        if(SomethingWrong.equals("PictureIsNull"))
 //            model.addAttribute("PictureIsNull","Картинка не должна быть пуста");
         model.addAttribute("Products",productService.findAllSorted());
-        model.addAttribute("allProducts",products);
+//        model.addAttribute("allProducts",products);
 
 
 
@@ -120,7 +120,9 @@ public class AdminController {
         else if(operation.equals("Удалить")) productService.deleteSomeAmountOfProductByName(nameOfProduct,amount);
         else if(operation.equals("Стереть товар")) {
             productService.eraseProductByName(nameOfProduct);
-            basketService.eraseProductFromBasketByName(nameOfProduct);
+
+//            ето под вопросом
+//            basketService.eraseProductFromBasketByName(nameOfProduct);
         }
 
 

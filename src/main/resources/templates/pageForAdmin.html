@@ -8,40 +8,44 @@
 
 <table>
 
-    <h2>Вся продукция на складе (не включая то, что пользователи добавили в корзины)</h2>
+    <h2>Вся продукция на складе </h2>
     <tr>
         <th>Картинка</th>
         <th>Название</th>
         <th>Цена</th>
         <th>Количество</th>
-        <th>ВООБЩЕ ВСЁ КОЛИЧЕСТВО</th>
+
     </tr>
 
     <form th:each="prod: ${Products}" method="post" action="/admin/check">
-        <tr th:each="all: ${allProducts}" th:if="${prod.typeProduct} == ${all.typeProduct}">
+
+        <tr>
+
             <th>
                 <img width="100px" height="100px" th:src="@{${prod.pathOfPicture}}" alt="" />
             </th>
             <th>[[${prod.typeProduct}]]</th>
             <th>[[${prod.price}]] рублей</th>
             <th>[[${prod.amount}]]</th>
-            <th>[[${all.amount}]]</th>
 
             <th>
-                    <input value="Удалить" type="submit" name="operation">
+                <input value="Удалить" type="submit" name="operation">
             </th>
             <th>
                 <input type="number" name="amount_of_product" min="1" placeholder="N-ое количество">
             </th>
             <th>
-                    <input value="Добавить" type="submit" name="operation">
-                    <input type="hidden" name="nameOfProduct" th:value="${prod.typeProduct}">
+                <input value="Добавить" type="submit" name="operation">
+                <input type="hidden" name="nameOfProduct" th:value="${prod.typeProduct}">
             </th>
 
             <th>
                 <input value="Стереть товар" type="submit" name="operation">
             </th>
+
         </tr>
+
+
 
     </form>
 

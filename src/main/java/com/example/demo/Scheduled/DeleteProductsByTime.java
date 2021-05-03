@@ -20,17 +20,17 @@ public class DeleteProductsByTime {
     ProductService productService;
 
 
-    //    @Scheduled(cron = "0 */30 * * * *")
-    @Scheduled(cron = "*/30 * * * * *")
+        @Scheduled(cron = "0 */30 * * * *")
+//    @Scheduled(cron = "*/30 * * * * *")
     public void taskOf22Pr() throws IOException {
         System.out.println("Oket~");
         List<Basket> allBaskets = basketService.findAll();
         for(Basket basket:allBaskets){
                                                     // 1 секунда == 1000
                                 // 24 часа = 1440 мин = 86400 сек = 86_400_000
-            if(new Date().getTime() - basket.getDateCreate() > 100_000){
+            if(new Date().getTime() - basket.getDateCreate() > 86_400_000){
                 long amount = basketService.deleteAllAmountByBasket(basket);
-                productService.addSomeAmountOfProductByName(basket.getNameOfProduct(), String.valueOf(amount));
+//                productService.addSomeAmountOfProductByName(basket.getNameOfProduct(), String.valueOf(amount));
             }
         }
     }

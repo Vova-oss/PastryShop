@@ -1,5 +1,6 @@
 package com.example.demo.Services;
 
+import com.example.demo.Entity.Basket;
 import com.example.demo.Entity.Product;
 import com.example.demo.Repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,8 @@ public class ProductService {
 
     @Autowired
     ProductRepository productRepository;
+    @Autowired
+    BasketService basketService;
 
     @Transactional
     public List<Product> findAll(){
@@ -34,6 +37,21 @@ public class ProductService {
         stream.sorted((o1, o2) -> o1.getTypeProduct().compareTo(o2.getTypeProduct()))
                 .forEach(newList::add);
         return newList;
+    }
+
+    public List<Product> findAllByUserIdWithNull(long id){
+        List<Basket> basketList= basketService.getAllByUserId(id);
+
+        List<Product> productList = findAllSorted();
+        for(Product product: productList){
+            for(Basket basket: basketList){
+                if(basket.getNameOfProduct().equals(product.getTypeProduct())){
+                    product.setAmount(product.getAmount() - basket.getAmount());
+                }
+            }
+        }
+
+        return productList;
     }
 
     @Transactional

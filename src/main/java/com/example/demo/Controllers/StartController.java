@@ -24,11 +24,11 @@ public class StartController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/ppss")
-    public String ppss(HttpServletResponse response){
-        response.addCookie(new Cookie("ppppp","vvvvv"));
-        return "redirect:/person/profile";
-    }
+//    @GetMapping("/ppss")
+//    public String ppss(HttpServletResponse response){
+//        response.addCookie(new Cookie("ppppp","vvvvv"));
+//        return "redirect:/person/profile";
+//    }
 
     @GetMapping("/postCookie")
     public String setCooliePost(HttpServletResponse response){

@@ -29,6 +29,8 @@
             <th>[[${prod.typeProduct}]]</th>
             <th>[[${prod.price}]] рублей</th>
             <th>[[${prod.amount}]]</th>
+
+
             <th>
                 <input type="hidden" name="product_id" th:value="${prod.id}"/>
                 <input value="Добавить в корзину" type="submit" th:attr="disabled=${prod.amount}>0 ? false : true">

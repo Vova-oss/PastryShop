@@ -58,15 +58,17 @@ public class PersonController {
 
     @GetMapping("/personalAccount")
     public String personalAccount(Model model){
-        model.addAttribute("product",productService.findAllSorted());
+        User user = userService.findUserByName(SecurityContextHolder.getContext().getAuthentication().getName());
+
+        model.addAttribute("product",productService.findAllByUserIdWithNull(user.getId()));
         return "personalAccount";
     }
 
     @PostMapping("/check")
     public String trying(@RequestParam(name = "product_id") String id){
         Product product = productService.findById(id);
-        if(productService.deleteOneAmountOfProduct(product))
-            basketService.saveOrUpdateOneAmountOfProduct(product);
+
+        basketService.saveOrUpdateOneAmountOfProduct(product);
         return "redirect:/personalAccount";
     }
 
@@ -76,12 +78,10 @@ public class PersonController {
 
         Product product = productService.findByTypeProduct(nameOfProduct);
         if(operation.equals("+")){
-            if(productService.deleteOneAmountOfProduct(product)){
-                basketService.addByNameOfProduct(nameOfProduct);
-            }
+            basketService.addByNameOfProduct(nameOfProduct);
+
         }else{
             basketService.deleteByNameOfProduct(nameOfProduct);
-            productService.addOneAmountOfProduct(product);
         }
 
         return "redirect:/basket";

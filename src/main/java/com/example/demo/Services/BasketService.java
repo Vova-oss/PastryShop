@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import javax.swing.plaf.basic.BasicTableHeaderUI;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
@@ -51,6 +52,13 @@ public class BasketService {
         upgradeAllTimeOfProduct(user);
     }
 
+    public List<Basket> getAllByUserId(long id){
+        List<Basket> list = basketRepository.findAllByUserId(id);
+        return list;
+    }
+
+
+
     @Transactional
     public List<Basket> getAllBasketCurrentUser(){
         List<Basket> listForDelete = new ArrayList<>();
@@ -73,7 +81,7 @@ public class BasketService {
 
         for(Basket basket:list){
             Product product = productService.findByTypeProduct(basket.getNameOfProduct());
-            basket.setAvailable(product.getAmount());
+            basket.setAvailable(product.getAmount() - basket.getAmount());
         }
         List<Basket> newList = new ArrayList<>();
         Stream<Basket> stream = list.stream();
