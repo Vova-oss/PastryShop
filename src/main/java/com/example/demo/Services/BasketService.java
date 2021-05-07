@@ -57,7 +57,35 @@ public class BasketService {
         return list;
     }
 
+    public void editingAmount(){
+        List<Basket> baskets = getAllBasketCurrentUser();
+        List<Product> products = productService.findAll();
+        for(Basket basket:baskets){
+            for(Product product:products){
+                if(basket.getNameOfProduct().equals(product.getTypeProduct())){
+                    if(basket.getAmount()>product.getAmount()) {
+                       basket.setAmount(product.getAmount());
+                       basketRepository.save(basket);
+                    }
+                }
+            }
+        }
 
+    }
+
+    public void deleteAllBasketsOfPerson(){
+
+        List<Basket> list = basketRepository.findAllByUserId(
+                userService.findUserByName(
+                        SecurityContextHolder.
+                                getContext().
+                                getAuthentication().
+                                getName()).
+                        getId());
+        for(Basket basket:list)
+            basketRepository.delete(basket);
+
+    }
 
     @Transactional
     public List<Basket> getAllBasketCurrentUser(){

@@ -2,6 +2,57 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
+
+
+    <style> body {font-family: Arial, Helvetica, sans-serif;}
+
+    /* The Modal (background) */
+    .modal {
+        display: none;
+        /* Hidden by default */
+        position: fixed;
+        /* Stay in place */
+        z-index: 1;
+        /* Sit on top */
+        padding-top: 100px;
+        /* Location of the box */
+        left: 0;   top: 0;   width: 100%;
+        /* Full width */
+        height: 100%;
+        /* Full height */
+        overflow: auto;
+        /* Enable scroll if needed */
+        background-color: rgb(0,0,0);
+        /* Fallback color */
+        background-color: rgba(0,0,0,0.4);
+        /* Black w/ opacity */
+    }
+
+    /* Modal Content */
+    .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+    }
+
+    /* The Close Button */
+    .close {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover, .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    </style>
+
+
     <title>Корзина</title>
 </head>
 <body>
@@ -51,6 +102,79 @@
     </form>
 </table>
 <br>
-<a href="/personalAccount">Nazad</a>
+<a href="/personalAccount">Назад</a>
+<br><br>
+<a href="/placeAnOrder">Оформить заказ</a>
+
+
+
+<!-- The Modal -->
+<div id="myModalError" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span id="span1" class="close">&times;</span>
+        <p>Некоторая выбранная Вами продукция больше недоступна.</p>
+
+    </div>
+</div>
+
+<div id="myModalGood" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span id="span2" class="close">&times;</span>
+        <p>Точно оформить?</p>
+        <button><a href="/clarificationOfTheDesign">Оформить</a></button>
+    </div>
+</div>
+
+<div id="myModalCompleted" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span id="span3" class="close">&times;</span>
+        <p>Продукция успешно заказана.</p>
+
+    </div>
+</div>
+
+<script>
+
+    // 0 - Бездействие
+    // 1 - Сообщение об ошибке
+    // 2 - Уточнение оформления заказа
+
+   var bool = [[${result}]];
+   var modalError = document.getElementById("myModalError");
+   var modalGood = document.getElementById("myModalGood");
+   var modalCompleted = document.getElementById("myModalCompleted");
+
+   if(bool === 1){
+       modalError.style.display = "block";
+   }else if(bool === 2){
+       modalGood.style.display = "block";
+   }else if(bool === 3){
+       modalCompleted.style.display = "block";
+   }
+
+   var span1 = document.getElementById("span1");
+   var span2 = document.getElementById("span2");
+   var span3 = document.getElementById("span3");
+   span1.onclick = function() {   modalError.style.display = "none"; bool=0}
+   span2.onclick = function() {   modalGood.style.display = "none"; bool=0}
+   span3.onclick = function() {   modalCompleted.style.display = "none"; bool=0}
+
+
+   window.onclick = function(event) {
+       if (event.target == modal2 || event.target == modalError || event.target == modalCompleted) {
+           modalError.style.display = "none";
+           modalGood.style.display = "none";
+           modalCompleted.style.display = "none";
+           bool = 0;
+       } }
+</script>
+
+
 </body>
 </html>

@@ -49,8 +49,67 @@ public class PersonController {
         return "profile";
     }
 
+    @GetMapping("/placeAnOrder")
+    public String placeAnOrder(Model model){
+        List<Basket> baskets = basketService.getAllBasketCurrentUser();
+        List<Product> products = productService.findAll();
+
+        for(Basket basket:baskets) {
+            for (Product product : products) {
+                if (basket.getNameOfProduct().equals(product.getTypeProduct())) {
+                    if (basket.getAmount() > product.getAmount()) {
+                        basketService.editingAmount();
+                        List<Basket> newList = basketService.getAllBasketCurrentUser();
+                        model.addAttribute("products", newList);
+                        model.addAttribute("result", 1);
+                        return "basket";
+
+                    }
+                }
+            }
+        }
+
+        model.addAttribute("result", 2);
+        model.addAttribute("products", baskets);
+
+
+
+        return "basket";
+    }
+
+    @GetMapping("/clarificationOfTheDesign")
+    public String clarificationOfTheDesing(Model model){
+        List<Basket> baskets = basketService.getAllBasketCurrentUser();
+        List<Product> products = productService.findAll();
+
+        for(Basket basket:baskets) {
+            for (Product product : products) {
+                if (basket.getNameOfProduct().equals(product.getTypeProduct())) {
+                    if (basket.getAmount() > product.getAmount()) {
+                        basketService.editingAmount();
+                        List<Basket> newList = basketService.getAllBasketCurrentUser();
+                        model.addAttribute("products", newList);
+                        model.addAttribute("result", 1);
+                        return "basket";
+
+                    }
+                }
+            }
+        }
+
+        basketService.deleteAllBasketsOfPerson();
+        model.addAttribute("result", 3);
+
+
+        return "basket";
+    }
+
+
     @GetMapping("/basket")
     public String basket(Model model){
+        // Проверка на количество (в корзине < в бд)
+        basketService.editingAmount();
+
         List<Basket> baskets = basketService.getAllBasketCurrentUser();
         model.addAttribute("products", baskets);
         return "basket";
@@ -58,6 +117,9 @@ public class PersonController {
 
     @GetMapping("/personalAccount")
     public String personalAccount(Model model){
+        // Проверка на количество (в корзине < в бд)
+        basketService.editingAmount();
+
         User user = userService.findUserByName(SecurityContextHolder.getContext().getAuthentication().getName());
 
         model.addAttribute("product",productService.findAllByUserIdWithNull(user.getId()));
