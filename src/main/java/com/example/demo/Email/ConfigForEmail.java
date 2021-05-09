@@ -19,7 +19,7 @@ public class ConfigForEmail {
 
         javaMailSender.setHost("smtp.gmail.com");
         javaMailSender.setPort(587);
-        javaMailSender.setUsername("newpersonwithoutname@gmail.com");
+        javaMailSender.setUsername("pastryshopps@gmail.com");
         javaMailSender.setPassword("Admin678!");
 
         Properties properties = javaMailSender.getJavaMailProperties();

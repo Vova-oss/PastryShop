@@ -29,7 +29,7 @@ public class EmailService {
         SimpleMailMessage message = new SimpleMailMessage();
 
         message.setTo(emailAddress);
-        message.setFrom("newpersonwithoutname@gmail.com");
+        message.setFrom("pastryshopps@gmail.com");
         message.setSubject("Подтверждение авторизации");
         message.setText(String.format("Доброго времени суток, %s! \n"
                             + "Для подтвержения вашей почты на сервисе PastryShop перейдите по сслыке: http://localhost:7777/activate/%s ", userName, code));
@@ -49,7 +49,7 @@ public class EmailService {
             List<User> users = userService.findAllUsers();
             for(User user:users){
                 helper.setTo(user.getEmail());
-                helper.setFrom("newpersonwithoutname@gmail.com");
+                helper.setFrom("pastryshopps@gmail.com");
                 helper.setSubject("В PastryShop появилась новая продукция!");
                 helper.setText(String.format("Доброго времени суток, %s! \nВ PastryShop появилась новая продукция!"
                         + "Спешите заказать %s. Цена за одну штуку равна %s " , user.getName(), nameOfProduct, priceOfProduct));
