@@ -1,5 +1,6 @@
 package com.example.demo.Controllers;
 
+import com.example.demo.Email.EmailService;
 import com.example.demo.Entity.User;
 import com.example.demo.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +11,14 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 @Controller
@@ -23,6 +26,9 @@ public class StartController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    EmailService emailService;
 
 //    @GetMapping("/ppss")
 //    public String ppss(HttpServletResponse response){
@@ -33,8 +39,6 @@ public class StartController {
     @GetMapping("/postCookie")
     public String setCooliePost(HttpServletResponse response){
         User user = userService.findUserByName(SecurityContextHolder.getContext().getAuthentication().getName());
-
-        response.addCookie(new Cookie("pp","nn"));
 
 //        Cookie pCookie = new Cookie("password",user.getPassword());
 //        Cookie lCookie = new Cookie("login", user.getLogin());
@@ -50,7 +54,10 @@ public class StartController {
     }
 
     @GetMapping("/login")
-    public String authorization(@RequestParam(required = false) String error, Model model, HttpServletRequest request){
+    public String authorization(@RequestParam(required = false) String error,
+                                @RequestParam(required = false) String afterR,
+                                Model model,
+                                HttpServletRequest request){
 
         if(userService.findUserByName(SecurityContextHolder.getContext().getAuthentication().getName())!=null){
             return "redirect:/postCookie";
@@ -69,6 +76,11 @@ public class StartController {
                         model.addAttribute("login", c.getValue());
                 }
         }
+
+        if(afterR != null){
+            model.addAttribute("activateCompleted", 2);
+        }
+
         return "login";
     }
 
@@ -117,7 +129,20 @@ public class StartController {
             return "/registration";
         }
         userService.saveOneUser(user);
-        return "redirect:/login";
+        emailService.MailSender(user.getActivationCode(),user.getEmail(),user.getName());
+
+        return "redirect:/login?afterR";
+    }
+
+    @GetMapping("/activate/{code}")
+    public String activateCode(@PathVariable() String code, Model model){
+
+        boolean activateCompleted = userService.checkActivate(code);
+        if(activateCompleted)
+            model.addAttribute("activateCompleted", 1);
+        else model.addAttribute("activateCompleted", 3);
+
+        return "login";
     }
 
     @GetMapping("/getCookie")

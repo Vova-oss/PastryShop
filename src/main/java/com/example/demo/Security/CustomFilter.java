@@ -1,5 +1,7 @@
 package com.example.demo.Security;
 
+import com.example.demo.Entity.User;
+import com.example.demo.Services.UserService;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
@@ -15,9 +17,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+
 public class CustomFilter extends UsernamePasswordAuthenticationFilter {
 
-    public CustomFilter(String url, AuthenticationManager authenticationManager) {
+    UserService userService;
+
+    public CustomFilter(String url, AuthenticationManager authenticationManager, UserService userService) {
+
+        this.userService = userService;
         setAuthenticationManager(authenticationManager);
 
         setAuthenticationSuccessHandler(new SimpleUrlAuthenticationSuccessHandler(){
@@ -48,7 +55,24 @@ public class CustomFilter extends UsernamePasswordAuthenticationFilter {
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        return super.attemptAuthentication(request, response);
+
+        User user = userService.findUserByName(request.getParameter("username"));
+
+        if(user.getActivationCode() != null) {
+            setAuthenticationFailureHandler(new SimpleUrlAuthenticationFailureHandler(){
+                @Override
+                public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
+                    super.setDefaultFailureUrl("/login?afterR");
+                    super.onAuthenticationFailure(request, response, exception);
+                }
+            });
+            throw new AuthenticationException("BadErrorGoodNotError") {
+                @Override
+                public String getMessage() {
+                    return super.getMessage();
+                }
+            };
+        }
+        return super.attemptAuthentication(request,response);
     }
 }

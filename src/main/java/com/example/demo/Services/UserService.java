@@ -7,7 +7,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import javax.validation.constraints.Null;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -23,8 +25,13 @@ public class UserService {
 
     @Transactional
     public void saveOneUser(User user){
+        user.setActivationCode(UUID.randomUUID().toString());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
+    }
+
+    public User findUserByActivationCode(String code){
+        return userRepository.findUserByActivationCode(code);
     }
 
     @Transactional
@@ -49,4 +56,14 @@ public class UserService {
         userRepository.save(fromDb);
     }
 
+    public boolean checkActivate(String code) {
+
+        User user = findUserByActivationCode(code);
+        if (user == null)
+            return false;
+
+        user.setActivationCode(null);
+        userRepository.save(user);
+        return true;
+    }
 }

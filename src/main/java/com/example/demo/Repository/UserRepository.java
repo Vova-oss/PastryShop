@@ -8,4 +8,5 @@ import java.util.List;
 public interface UserRepository extends CrudRepository<User,Long> {
     User findByLogin(String login);
     List<User> findAll();
+    User findUserByActivationCode(String activationCode);
 }

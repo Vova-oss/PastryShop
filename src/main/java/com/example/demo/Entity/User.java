@@ -52,6 +52,8 @@ public class User  {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Basket> baskets;
 
+    private String activationCode;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -62,10 +62,59 @@
         .box input[type="submit"]:hover{
             background: #2ecc71;
         }
+
+
+
+        /* The Modal (background) */
+        .modal {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            /* Stay in place */
+            z-index: 1;
+            /* Sit on top */
+            padding-top: 100px;
+            /* Location of the box */
+            left: 0;   top: 0;   width: 100%;
+            /* Full width */
+            height: 100%;
+            /* Full height */
+            overflow: auto;
+            /* Enable scroll if needed */
+            background-color: rgb(0,0,0);
+            /* Fallback color */
+            background-color: rgba(0,0,0,0.4);
+            /* Black w/ opacity */
+        }
+
+        /* Modal Content */
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        /* The Close Button */
+        .close {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover, .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+
     </style>
 </head>
 <body>
-<form method="post" class="box">
+<form th:action=@{/login} method="post" class="box">
     <h3>Авторизация</h3>
     <span th:text="${IncorrectData}"></span>
     <br>
@@ -76,6 +125,75 @@
     <h3 style="color:grey">↓</h3>
     <a href="/registration">Регистрация</a>
 </form>
+
+
+
+<div id="activateCompleted" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span id="span1" class="close">&times;</span>
+        <p>Почта успешно подтверждена. Пройдите форму авторизации.</p>
+
+    </div>
+</div>
+
+<div id="afterRegistration" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span id="span2" class="close">&times;</span>
+        <p>Вам на письмо было отправлено почтой. Проверьте её и для подтвержения подтвердите по сслыке.</p>
+
+    </div>
+</div>
+
+<div id="badLink" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span id="span3" class="close">&times;</span>
+        <p>Данная ссылка больше не действительна.</p>
+
+    </div>
+</div>
+
+<script>
+
+    // 0 - Бездействие
+    // 1 - Сообщение об успешном подтверждении почты
+    // 2 - Сообщение о необходимости подтвердить почту (после регистрации)
+    // 3 - Ссылка больше не действительна
+
+    var boolL = [[${activateCompleted}]];
+    var modalCompletedL = document.getElementById("activateCompleted");
+    var modelAfterR = document.getElementById("afterRegistration");
+    var modelBadLink = document.getElementById("badLink");
+
+    if(boolL === 1){
+        modalCompletedL.style.display = "block";
+    }else if (boolL === 2){
+        modelAfterR.style.display = "block";
+    }else if (boolL === 3){
+        modelBadLink.style.display = "block";
+    }
+
+    var span1L = document.getElementById("span1");
+    var span2L = document.getElementById("span2");
+    var span3L = document.getElementById("span3");
+
+    span1L.onclick = function() {   modalCompletedL.style.display = "none"; boolL=0}
+    span2L.onclick = function() {   modelAfterR.style.display = "none"; boolL=0}
+    span3L.onclick = function() {   modelBadLink.style.display = "none"; boolL=0}
+
+    window.onclick = function(event) {
+        if (event.target == modalCompletedL || event.target == modelAfterR || event.target == modelBadLink) {
+            modalCompletedL.style.display = "none";
+            modelAfterR.style.display = "none";
+            modelBadLink.style.display = "none";
+            boolL = 0;
+        } }
+</script>
 
 </body>
 </html>
