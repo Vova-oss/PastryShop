@@ -1,5 +1,6 @@
 package com.example.demo.Controllers;
 
+import com.example.demo.Email.EmailService;
 import com.example.demo.Entity.Basket;
 import com.example.demo.Entity.Product;
 import com.example.demo.Entity.User;
@@ -36,6 +37,8 @@ public class AdminController {
     BasketService basketService;
     @Autowired
     UserService userService;
+    @Autowired
+    EmailService emailService;
 
     @GetMapping("/pageForAdmin")
     public String pageForAdmin(Model model){
@@ -73,10 +76,6 @@ public class AdminController {
                              @RequestParam(name = "pictureOfProduct") MultipartFile file,
                              Model model){
 
-        System.out.println(file.getOriginalFilename());
-        System.out.println(file.getName());
-
-
         if(productService.findByTypeProduct(nameOfNewProduct)!=null ||
                 file.getOriginalFilename().equals("") ||
                 priceOfNewProduct.equals("") ||
@@ -93,8 +92,6 @@ public class AdminController {
         }
 
 
-
-
         String uuid = UUID.randomUUID().toString();
         String fileName = uuid + file.getOriginalFilename();
         String wayOfFile = uploadPath + "/" + fileName;
@@ -105,6 +102,7 @@ public class AdminController {
         }
 
         productService.addNewProduct(nameOfNewProduct,priceOfNewProduct,amountOfNewProduct,fileName);
+        emailService.mailSenderWithNewProduct(wayOfFile, nameOfNewProduct, priceOfNewProduct);
 
         return "redirect:/admin/pageForAdmin";
     }

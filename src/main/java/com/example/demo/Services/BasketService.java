@@ -82,8 +82,15 @@ public class BasketService {
                                 getAuthentication().
                                 getName()).
                         getId());
-        for (Basket basket : list)
+
+
+
+        for (Basket basket : list) {
+            // Удаление из основной бд
+            productService.deleteSomeAmountOfProductByName(basket.getNameOfProduct(), String.valueOf(basket.getAmount()));
+
             basketRepository.delete(basket);
+        }
 
     }
 

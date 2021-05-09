@@ -129,7 +129,7 @@ public class StartController {
             return "/registration";
         }
         userService.saveOneUser(user);
-        emailService.MailSender(user.getActivationCode(),user.getEmail(),user.getName());
+        emailService.mailSenderAfterRegistration(user.getActivationCode(),user.getEmail(),user.getName());
 
         return "redirect:/login?afterR";
     }
