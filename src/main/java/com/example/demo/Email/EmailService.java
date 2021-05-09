@@ -18,7 +18,7 @@ public class EmailService {
         message.setTo(emailAddress);
         message.setFrom("newpersonwithoutname@gmail.com");
         message.setSubject("Подтверждение авторизации");
-        message.setText(String.format("Доброго времени суток, %s \n!"
+        message.setText(String.format("Доброго времени суток, %s! \n"
                             + "Для подтвержения вашей почты на сервисе PastryShop перейдите по сслыке: http://localhost:7777/activate/%s ", userName, code));
 
         javaMailSender.send(message);

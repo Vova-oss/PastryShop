@@ -3,6 +3,7 @@ package com.example.demo.Services;
 import com.example.demo.Entity.Basket;
 import com.example.demo.Entity.Product;
 import com.example.demo.Repository.ProductRepository;
+import org.apache.tomcat.jni.Library;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -112,6 +113,15 @@ public class ProductService {
         product.setAmount(Integer.parseInt(amount));
         product.setPathOfPicture("/images/"+pathOfPicture);
         productRepository.save(product);
+
+    }
+
+    public void changePriceOfProduct(String nameOfProduct, String newPrice) {
+        Product product = productRepository.findByTypeProduct(nameOfProduct);
+        product.setPrice(Long.parseLong(newPrice));
+        productRepository.save(product);
+
+        basketService.changePriceOfProduct(nameOfProduct, newPrice);
 
     }
 }

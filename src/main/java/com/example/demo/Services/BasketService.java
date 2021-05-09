@@ -185,4 +185,16 @@ public class BasketService {
             }
         }
     }
+
+    public void changePriceOfProduct(String nameOfProduct, String newPrice) {
+
+        List<Basket> basketList = findAll();
+        for(Basket basket: basketList){
+            if(basket.getNameOfProduct().equals(nameOfProduct)) {
+                basket.setPrice(Long.parseLong(newPrice));
+                basketRepository.save(basket);
+            }
+        }
+
+    }
 }

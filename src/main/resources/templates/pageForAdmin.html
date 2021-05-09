@@ -14,6 +14,8 @@
         <th>Название</th>
         <th>Цена</th>
         <th>Количество</th>
+        <th>Изменить количество</th>
+        <th>Изменить цену</th>
 
     </tr>
 
@@ -30,21 +32,19 @@
 
             <th>
                 <input value="Удалить" type="submit" name="operation">
-            </th>
-            <th>
-                <input type="number" name="amount_of_product" min="1" placeholder="N-ое количество">
-            </th>
-            <th>
+                <input type="number" name="amount_of_product" min="1" th:attr="placeholder=${prod.typeProduct}==${nameOfProduct} ? ${nullAmount} : 'N-ое количество'">
                 <input value="Добавить" type="submit" name="operation">
                 <input type="hidden" name="nameOfProduct" th:value="${prod.typeProduct}">
-            </th>
-
-            <th>
                 <input value="Стереть товар" type="submit" name="operation">
             </th>
 
-        </tr>
+            <th>
+                <input type="number" name="new_price" min="1" th:attr="placeholder=${prod.typeProduct}==${nameOfProduct} ? ${nullPrice} : 'Новая цена'">
+                <input value="Изменить цену" type="submit" name="operation">
+            </th>
 
+
+        </tr>
 
 
     </form>

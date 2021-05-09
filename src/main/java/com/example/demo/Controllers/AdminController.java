@@ -112,17 +112,42 @@ public class AdminController {
     @PostMapping("/check")
     public String check(@RequestParam(name="nameOfProduct")String nameOfProduct,
                         @RequestParam(name="operation") String operation,
-                        @RequestParam(name="amount_of_product",required = false) String amount){
+                        @RequestParam(name="amount_of_product",required = false) String amount,
+                        @RequestParam(name="new_price", required = false) String newPrice,
+                        Model model){
 
 
-        if(operation.equals("Добавить"))
-            productService.addSomeAmountOfProductByName(nameOfProduct,amount);
-        else if(operation.equals("Удалить")) productService.deleteSomeAmountOfProductByName(nameOfProduct,amount);
+        if(operation.equals("Добавить")) {
+            if(amount.equals("")){
+                model.addAttribute("nullAmount","Мин. количество = 1");
+                model.addAttribute("nullPrice","Новая цена");
+                model.addAttribute("nameOfProduct", nameOfProduct);
+                return pageForAdmin(model);
+            }
+            productService.addSomeAmountOfProductByName(nameOfProduct, amount);
+        }
+        else if(operation.equals("Удалить")) {
+            if(amount.equals("")){
+                model.addAttribute("nullAmount","Мин. количество = 1");
+                model.addAttribute("nullPrice","Новая цена");
+                model.addAttribute("nameOfProduct", nameOfProduct);
+                return pageForAdmin(model);
+            }
+            productService.deleteSomeAmountOfProductByName(nameOfProduct, amount);
+        }
         else if(operation.equals("Стереть товар")) {
             productService.eraseProductByName(nameOfProduct);
 
 //            ето под вопросом
-//            basketService.eraseProductFromBasketByName(nameOfProduct);
+            basketService.eraseProductFromBasketByName(nameOfProduct);
+        }else if(operation.equals("Изменить цену")){
+            if(newPrice.equals("")){
+                model.addAttribute("nullPrice","Мин. цена = 1");
+                model.addAttribute("nullAmount","N-ое количество");
+                model.addAttribute("nameOfProduct", nameOfProduct);
+                return pageForAdmin(model);
+            }
+            productService.changePriceOfProduct(nameOfProduct, newPrice);
         }
 
 
