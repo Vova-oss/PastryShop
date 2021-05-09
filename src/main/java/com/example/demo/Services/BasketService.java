@@ -27,19 +27,19 @@ public class BasketService {
     ProductService productService;
 
     @Transactional
-    public void saveOrUpdateOneAmountOfProduct(Product product){
+    public void saveOrUpdateOneAmountOfProduct(Product product) {
         List<Basket> baskets = basketRepository.findByNameOfProduct(product.getTypeProduct());
         User user = userService.findUserByName(SecurityContextHolder.getContext().getAuthentication().getName());
         boolean flag = false;
-        for(Basket basket:baskets){
-            if(basket.getUser().getId()==user.getId()){
-                basket.setAmount(basket.getAmount()+1);
+        for (Basket basket : baskets) {
+            if (basket.getUser().getId() == user.getId()) {
+                basket.setAmount(basket.getAmount() + 1);
                 basketRepository.save(basket);
                 flag = true;
             }
 
         }
-        if(!flag){
+        if (!flag) {
             Basket basket = new Basket();
             basket.setAmount(1);
             basket.setPrice(product.getPrice());
@@ -52,20 +52,20 @@ public class BasketService {
         upgradeAllTimeOfProduct(user);
     }
 
-    public List<Basket> getAllByUserId(long id){
+    public List<Basket> getAllByUserId(long id) {
         List<Basket> list = basketRepository.findAllByUserId(id);
         return list;
     }
 
-    public void editingAmount(){
+    public void editingAmount() {
         List<Basket> baskets = getAllBasketCurrentUser();
         List<Product> products = productService.findAll();
-        for(Basket basket:baskets){
-            for(Product product:products){
-                if(basket.getNameOfProduct().equals(product.getTypeProduct())){
-                    if(basket.getAmount()>product.getAmount()) {
-                       basket.setAmount(product.getAmount());
-                       basketRepository.save(basket);
+        for (Basket basket : baskets) {
+            for (Product product : products) {
+                if (basket.getNameOfProduct().equals(product.getTypeProduct())) {
+                    if (basket.getAmount() > product.getAmount()) {
+                        basket.setAmount(product.getAmount());
+                        basketRepository.save(basket);
                     }
                 }
             }
@@ -73,7 +73,7 @@ public class BasketService {
 
     }
 
-    public void deleteAllBasketsOfPerson(){
+    public void deleteAllBasketsOfPerson() {
 
         List<Basket> list = basketRepository.findAllByUserId(
                 userService.findUserByName(
@@ -82,13 +82,13 @@ public class BasketService {
                                 getAuthentication().
                                 getName()).
                         getId());
-        for(Basket basket:list)
+        for (Basket basket : list)
             basketRepository.delete(basket);
 
     }
 
     @Transactional
-    public List<Basket> getAllBasketCurrentUser(){
+    public List<Basket> getAllBasketCurrentUser() {
         List<Basket> listForDelete = new ArrayList<>();
         List<Basket> list = basketRepository.findAllByUserId(
                 userService.findUserByName(
@@ -97,17 +97,17 @@ public class BasketService {
                                 getAuthentication().
                                 getName()).
                         getId());
-        for(Basket basket:list){
-            if(basket.getAmount()==0){
+        for (Basket basket : list) {
+            if (basket.getAmount() == 0) {
                 listForDelete.add(basket);
                 basketRepository.delete(basket);
             }
         }
-        for(Basket basket:listForDelete){
+        for (Basket basket : listForDelete) {
             list.remove(basket);
         }
 
-        for(Basket basket:list){
+        for (Basket basket : list) {
             Product product = productService.findByTypeProduct(basket.getNameOfProduct());
             basket.setAvailable(product.getAmount() - basket.getAmount());
         }
@@ -120,12 +120,12 @@ public class BasketService {
     }
 
     @Transactional
-    public void addByNameOfProduct(String nameOfProduct){
+    public void addByNameOfProduct(String nameOfProduct) {
         List<Basket> baskets = basketRepository.findByNameOfProduct(nameOfProduct);
         User user = userService.findUserByName(SecurityContextHolder.getContext().getAuthentication().getName());
-        for(Basket basket:baskets){
-            if(basket.getUser().getId()==user.getId()){
-                basket.setAmount(basket.getAmount()+1);
+        for (Basket basket : baskets) {
+            if (basket.getUser().getId() == user.getId()) {
+                basket.setAmount(basket.getAmount() + 1);
                 basketRepository.save(basket);
             }
         }
@@ -133,31 +133,32 @@ public class BasketService {
     }
 
     @Transactional
-    public void deleteByNameOfProduct(String nameOfProduct){
+    public void deleteByNameOfProduct(String nameOfProduct) {
         List<Basket> baskets = basketRepository.findByNameOfProduct(nameOfProduct);
         User user = userService.findUserByName(SecurityContextHolder.getContext().getAuthentication().getName());
-        for(Basket basket:baskets){
-            if(basket.getUser().getId()==user.getId()){
-                basket.setAmount(basket.getAmount()-1);
+        for (Basket basket : baskets) {
+            if (basket.getUser().getId() == user.getId()) {
+                basket.setAmount(basket.getAmount() - 1);
                 basketRepository.save(basket);
             }
         }
         upgradeAllTimeOfProduct(user);
     }
+
     @Transactional
-    public long deleteAllAmountByBasket(Basket basket){
+    public long deleteAllAmountByBasket(Basket basket) {
         long amount = basket.getAmount();
         basketRepository.delete(basket);
         return amount;
     }
 
     @Transactional
-    public List<Basket> findAll(){
+    public List<Basket> findAll() {
         return (List<Basket>) basketRepository.findAll();
     }
 
     @Transactional
-    public List<Basket> findAllSorted(){
+    public List<Basket> findAllSorted() {
         List<Basket> baskets = findAll();
         List<Basket> newList = new ArrayList<>();
         Stream<Basket> stream = baskets.stream();
@@ -169,16 +170,16 @@ public class BasketService {
     @Transactional
     public void eraseProductFromBasketByName(String nameOfProduct) {
         List<Basket> baskets = basketRepository.findByNameOfProduct(nameOfProduct);
-        for(Basket basket:baskets)
+        for (Basket basket : baskets)
             basketRepository.delete(basket);
     }
 
     @Transactional
-    public void upgradeAllTimeOfProduct(User user){
+    public void upgradeAllTimeOfProduct(User user) {
         // Обновляю время продукции данного пользователя
         List<Basket> allBaskets = findAll();
-        for(Basket basket:allBaskets){
-            if(basket.getUser().getId()==user.getId()){
+        for (Basket basket : allBaskets) {
+            if (basket.getUser().getId() == user.getId()) {
                 basket.setDateCreate(new Date().getTime());
                 basketRepository.save(basket);
                 System.out.println(basket.getDateCreate());
@@ -189,12 +190,27 @@ public class BasketService {
     public void changePriceOfProduct(String nameOfProduct, String newPrice) {
 
         List<Basket> basketList = findAll();
-        for(Basket basket: basketList){
-            if(basket.getNameOfProduct().equals(nameOfProduct)) {
+        for (Basket basket : basketList) {
+            if (basket.getNameOfProduct().equals(nameOfProduct)) {
                 basket.setPrice(Long.parseLong(newPrice));
                 basketRepository.save(basket);
             }
         }
 
     }
+
+    public int getAllPriceCurrentUser() {
+        List<Basket> baskets = getAllBasketCurrentUser();
+        int allPrice = 0;
+        for (Basket basket : baskets) {
+            allPrice += basket.getPrice() * basket.getAmount();
+        }
+        return allPrice;
+    }
+
+    public boolean chekBasketIsEmpty() {
+        List<Basket> baskets = getAllBasketCurrentUser();
+        return baskets.isEmpty();
+    }
+
 }

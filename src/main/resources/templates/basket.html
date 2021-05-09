@@ -61,7 +61,7 @@
 <!--[[ ${#numbers.formatDecimal(55.466 == null ? 0 : 55.466, 0, 2)} ]]-->
 
 
-<table>
+<table th:if="${basketIsEmpty} == false">
     <tr>
         <th>Картинка</th>
         <th>Название</th>
@@ -100,8 +100,18 @@
 
 
     </form>
+
+    <tr>
+        <th colspan="3">ИТОГО: </th>
+        <th colspan="2">[[ ${allPrice} ]]</th>
+        <th></th>
+        <th></th>
+    </tr>
 </table>
 <br>
+
+<p th:if="${basketIsEmpty} == true"> Корзина пуста </p>
+
 <a href="/personalAccount">Назад</a>
 <br><br>
 <a href="/placeAnOrder">Оформить заказ</a>
@@ -124,8 +134,9 @@
     <!-- Modal content -->
     <div class="modal-content">
         <span id="span2" class="close">&times;</span>
-        <p>Точно оформить?</p>
-        <button><a href="/clarificationOfTheDesign">Оформить</a></button>
+        <p th:if="${basketIsEmpty} == false">Точно оформить?</p>
+        <a th:if="${basketIsEmpty} == false" href="/clarificationOfTheDesign"><button>Оформить</button></a>
+        <p th:if="${basketIsEmpty} == true">Корзина пуста</p>
     </div>
 </div>
 

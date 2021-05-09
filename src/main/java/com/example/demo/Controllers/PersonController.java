@@ -54,12 +54,15 @@ public class PersonController {
         List<Basket> baskets = basketService.getAllBasketCurrentUser();
         List<Product> products = productService.findAll();
 
+        model.addAttribute("basketIsEmpty",basketService.chekBasketIsEmpty());
+
         for(Basket basket:baskets) {
             for (Product product : products) {
                 if (basket.getNameOfProduct().equals(product.getTypeProduct())) {
                     if (basket.getAmount() > product.getAmount()) {
                         basketService.editingAmount();
                         List<Basket> newList = basketService.getAllBasketCurrentUser();
+                        model.addAttribute("allPrice",basketService.getAllPriceCurrentUser());
                         model.addAttribute("products", newList);
                         model.addAttribute("result", 1);
                         return "basket";
@@ -69,6 +72,7 @@ public class PersonController {
             }
         }
 
+        model.addAttribute("allPrice", basketService.getAllPriceCurrentUser());
         model.addAttribute("result", 2);
         model.addAttribute("products", baskets);
 
@@ -82,12 +86,15 @@ public class PersonController {
         List<Basket> baskets = basketService.getAllBasketCurrentUser();
         List<Product> products = productService.findAll();
 
+
+
         for(Basket basket:baskets) {
             for (Product product : products) {
                 if (basket.getNameOfProduct().equals(product.getTypeProduct())) {
                     if (basket.getAmount() > product.getAmount()) {
                         basketService.editingAmount();
                         List<Basket> newList = basketService.getAllBasketCurrentUser();
+                        model.addAttribute("basketIsEmpty",basketService.chekBasketIsEmpty());
                         model.addAttribute("products", newList);
                         model.addAttribute("result", 1);
                         return "basket";
@@ -98,6 +105,8 @@ public class PersonController {
         }
 
         basketService.deleteAllBasketsOfPerson();
+
+        model.addAttribute("basketIsEmpty",basketService.chekBasketIsEmpty());
         model.addAttribute("result", 3);
 
 
@@ -109,9 +118,11 @@ public class PersonController {
     public String basket(Model model){
         // Проверка на количество (в корзине < в бд)
         basketService.editingAmount();
-
         List<Basket> baskets = basketService.getAllBasketCurrentUser();
+
+        model.addAttribute("basketIsEmpty",basketService.chekBasketIsEmpty());
         model.addAttribute("products", baskets);
+        model.addAttribute("allPrice", basketService.getAllPriceCurrentUser());
         return "basket";
     }
 
