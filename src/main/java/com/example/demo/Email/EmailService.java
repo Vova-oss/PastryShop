@@ -40,14 +40,16 @@ public class EmailService {
     @Async
     public void mailSenderWithNewProduct(String wayOfFile, String nameOfProduct, String priceOfProduct){
 
-        MimeMessage message = javaMailSender.createMimeMessage();
-        MimeMessageHelper helper = null;
+        MimeMessage message;
+        MimeMessageHelper helper;
 
         try {
 
-            helper = new MimeMessageHelper(message,true);
+
             List<User> users = userService.findAllUsers();
             for(User user:users){
+                message = javaMailSender.createMimeMessage();
+                helper = new MimeMessageHelper(message,true);
                 helper.setTo(user.getEmail());
                 helper.setFrom("pastryshopps@gmail.com");
                 helper.setSubject("В PastryShop появилась новая продукция!");
