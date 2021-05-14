@@ -8,16 +8,15 @@
             margin:0;
             padding: 0;
             font-family: sans-serif;
-            background: #34459e;
         }
         .box{
             width: 300px;
             padding: 25px;
             position: absolute;
             top:50%;
-            left: 50%;
+            left: 70%;
             transform: translate(-50%,-50%);
-            background: #191919;
+            background: rgba(25, 25, 25, 0.89);
             text-align: center;
             border-radius: 10px
         }
@@ -62,58 +61,91 @@
         .box input[type="submit"]:hover{
             background: #2ecc71;
         }
-
-
-
         /* The Modal (background) */
         .modal {
-            display: none;
-            /* Hidden by default */
+            /*display: none;*/
+            /*!* Hidden by default *!*/
+            /*position: fixed;*/
+            /*!* Stay in place *!*/
+            /*z-index: 1;*/
+            /*!* Sit on top *!*/
+            /*padding-top: 100px;*/
+            /*!* Location of the box *!*/
+            /*left: 0;   top: 0;   width: 100%;*/
+            /*!* Full width *!*/
+            /*height: 100%;*/
+            /*!* Full height *!*/
+            /*overflow: auto;*/
+            /*!* Enable scroll if needed *!*/
+            /*background-color: rgb(0,0,0);*/
+            /*!* Fallback color *!*/
+            /*background-color: rgba(0,0,0,0.4);*/
+            /*!* Black w/ opacity *!*/
             position: fixed;
-            /* Stay in place */
-            z-index: 1;
-            /* Sit on top */
-            padding-top: 100px;
-            /* Location of the box */
-            left: 0;   top: 0;   width: 100%;
-            /* Full width */
-            height: 100%;
-            /* Full height */
-            overflow: auto;
-            /* Enable scroll if needed */
-            background-color: rgb(0,0,0);
-            /* Fallback color */
-            background-color: rgba(0,0,0,0.4);
-            /* Black w/ opacity */
+            font-family: Arial, Helvetica, sans-serif;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 99999;
+            -webkit-transition: opacity 400ms ease-in;
+            -moz-transition: opacity 400ms ease-in;
+            transition: opacity 400ms ease-in;
+            display: none;
+            pointer-events: none;
         }
 
         /* Modal Content */
         .modal-content {
-            background-color: #fefefe;
-            margin: auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
+            display: block;
+            pointer-events: auto;
+            border: 2px solid #ea1737;
         }
-
+        .modal > div {
+            width: 400px;
+            position: relative;
+            margin: 10% auto;
+            padding: 5px 20px 13px 20px;
+            border-radius: 10px;
+            background: #fff;
+            background: -moz-linear-gradient(#fff, #999);
+            background: -webkit-linear-gradient(#fff, #999);
+            background: -o-linear-gradient(#fff, #999);
+        }
         /* The Close Button */
         .close {
-            color: #aaaaaa;
-            float: right;
-            font-size: 28px;
+            background: #606061;
+            color: #FFFFFF;
+            line-height: 25px;
+            position: absolute;
+            right: -12px;
+            text-align: center;
+            top: -10px;
+            width: 24px;
+            text-decoration: none;
             font-weight: bold;
+            -webkit-border-radius: 12px;
+            -moz-border-radius: 12px;
+            border-radius: 12px;
+            -moz-box-shadow: 1px 1px 3px #000;
+            -webkit-box-shadow: 1px 1px 3px #000;
+            box-shadow: 1px 1px 3px #000;
         }
 
+        .close:hover { background: #00d9ff; }
         .close:hover, .close:focus {
-            color: #000;
+            color: #00d9ff;
             text-decoration: none;
             cursor: pointer;
         }
-
-
+        body{
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
     </style>
 </head>
-<body>
+<body th:style="'background-image: url(../images/loginreg.jpg);'">
 <form th:action=@{/login} method="post" class="box">
     <h3>Авторизация</h3>
     <span th:text="${IncorrectData}"></span>
@@ -133,7 +165,7 @@
     <!-- Modal content -->
     <div class="modal-content">
         <span id="span1" class="close">&times;</span>
-        <p>Почта успешно подтверждена. Пройдите форму авторизации.</p>
+        <p style="text-align: center">Почта успешно подтверждена. Пройдите форму авторизации.</p>
 
     </div>
 </div>
@@ -143,7 +175,7 @@
     <!-- Modal content -->
     <div class="modal-content">
         <span id="span2" class="close">&times;</span>
-        <p>Вам на почту было отправлено письмо. Проверьте её и для подтверждения перейдите по сслыке в письме.</p>
+        <p style="text-align: center">Вам на почту было отправлено письмо. Проверьте её и для подтверждения перейдите по сслыке в письме.</p>
 
     </div>
 </div>
@@ -153,7 +185,7 @@
     <!-- Modal content -->
     <div class="modal-content">
         <span id="span3" class="close">&times;</span>
-        <p>Данная ссылка больше не действительна.</p>
+        <p style="text-align: center">Данная ссылка больше не действительна.</p>
 
     </div>
 </div>

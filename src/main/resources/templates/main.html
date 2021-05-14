@@ -43,14 +43,10 @@
             letter-spacing: 10px;
             border-radius: 5px;
         }
-        .img-1 {
-            background-image: url("../static/products/foto1.jpg");
-            min-height: 100%;
-        }
-
         .img-1{
             position: relative;
             opacity: 0.65;
+            min-height: 100%;
             background-attachment: fixed;
             background-position: center;
             background-repeat: no-repeat;
@@ -145,7 +141,7 @@
 </head>
 <body link="red" vlink="#cecece" alink="#ff0000">
 
-<div class="img-1" style="" >
+<div class="img-1" th:style="'background-image: url(../products/foto1.jpg);'" >
     <div style="">
         <a href="/registration" class="button">Регистрация</a>
         <a href="/login" class="button2">Вход</a>
@@ -160,7 +156,7 @@
 </div>
 <div class="slideshow-container">
     <div class="mySlides fade">
-        <img th:src="@{images/ffff.jpg}" style="width:100%"/>
+        <img th:src="@{products/foto1.jpg}" style="width:100%"/>
         <div class="text">Блены</div>
     </div>
 
@@ -170,7 +166,7 @@
     </div>
 
     <div class="mySlides fade">
-        <img th:src="@{../products/foto2.jpg}" style="width:100%"/>
+        <img th:src="@{../products/foto3.jpg}" style="width:100%"/>
 <!--        <img th:src="@{/Products/foto2.jpg}" style="width:100%">-->
         <div class="text">Блены</div>
     </div>

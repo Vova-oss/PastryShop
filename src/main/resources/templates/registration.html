@@ -10,16 +10,15 @@
             margin:0;
             padding: 0;
             font-family: sans-serif;
-            background: #34459e;
         }
         .box{
             width: 300px;
             padding: 20px;
             position: absolute;
             top:50%;
-            left: 50%;
+            left: 70%;
             transform: translate(-50%,-50%);
-            background: #191919;
+            background: rgba(25, 25, 25, 0.89);
             text-align: center;
             border-radius: 10px
         }
@@ -61,12 +60,16 @@
             transition: 0.25s;
             font-size: 16px;
         }
-        .box input[type="submit"]:hover{
+        .box input[type="submit"]:hover {
             background: #2ecc71;
+        }
+        body{
+            background-size: cover;
+            background-repeat: no-repeat;
         }
     </style>
 </head>
-<body>
+<body th:style="'background-image: url(../images/loginreg.jpg);'">
 <form action="/registrationAction" method="get" class="box">
     <h3>Регистрация</h3>
     <!--    <span style="color: red" th:text="${UserAlreadyExist}"></span>-->

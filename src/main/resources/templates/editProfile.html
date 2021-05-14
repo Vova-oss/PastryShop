@@ -2,76 +2,125 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Изменение данных</title>
+    <style>
+        table {
+            border: 1px solid #010509;
+            background: rgba(161, 175, 172, 0);
+            margin-top: 7%;
+            margin-left: 21%;
+            float: none;
+            font-size: 18px;
+            width: 350px;
+            height: 400px;
+        }
+        th {
+            font-weight: normal;
+            color: #01040a;
+            padding: 10px;
+        }
+        td {
+            color: #669;
+            border-top: 1px dashed white;
+            padding: 10px;
+            background:#ccddff;
+        }
+        tr:hover td {
+            background: #99bcff;
+        }
+
+        .topnav {
+            background-color: #333;
+            overflow: hidden;
+        }
+
+        /* Style the links inside the navigation bar */
+        .topnav a {
+            float: right;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+        }
+
+        /* Change the color of links on hover */
+        .topnav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        /* Add a color to the active/current link */
+        .topnav a.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+        body{
+            margin: 0;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        input{
+            background: transparent;
+            font-family: Bradley Hand, cursive;
+            text-align: center;
+            font-size: 16px;
+        }
+        input:hover {background: #eee;}
+    </style>
 </head>
-<body>
-
-<form action="/editProfileAction" method="get" >
-    <h3>Регистрация</h3>
-    <!--    <span style="color: red" th:text="${UserAlreadyExist}"></span>-->
-    <br>
+<!--<body style="background-image: url('change.jpg')">-->
+<body th:style="'background-image: url(../images/change.jpg);'">
+    <div class="topnav">
+        <a href="/logout">Выйти из аккаунта</a>
+        <a href="/profile">Назад</a>
+    </div>
+    <form action="/editProfileAction" method="get" style="font-family: Bradley Hand, cursive; ">
+        <!--    <span style="color: red" th:text="${UserAlreadyExist}"></span>-->
     <table>
-
-
+        <thead>
+        <tr>
+            <th colspan="2" style="font-size: 20px;" > Изменение личных данных</th>
+        </tr>
+        </thead>
         <tr>
             <th>Фамилия</th>
             <th><input type="text" name="surname" th:value="${currentSurname}"></th>
             <th><span style="color:red" th:text="${surname}"></span></th>
         </tr>
-
-
         <tr>
             <th>Имя</th>
             <th><input type="text" name="name" th:value="${currentName}"></th>
             <th><span style="color:red" th:text="${name}"></span></th>
         </tr>
-
-
         <tr>
             <th>Email</th>
             <th><input type="text" name="email" th:value="${currentEmail}"></th>
             <th><span style="color:red" th:text="${email}"></span></th>
         </tr>
-
         <tr>
             <th>Телефонный номер</th>
             <th><input type="text" name="telephone_number" th:value="${currentTelephoneNumber}"></th>
             <th><span style="color:red" th:text="${telephone_number}"></span></th>
         </tr>
-
-
         <tr>
-
             <input type="hidden" name="login" placeholder="Логин" th:value="${currentLogin}">
             <th>Новый пароль</th>
-            <th><input type="text" name="password" th:value="${currentPassword}"></th>
+            <th><input type="password" name="password" th:value="${currentPassword}"></th>
             <th><span style="color:red" th:text="${password}"></span></th>
         </tr>
-
-
-
     </table>
-
-    <br>
-    <br>
-    <br>
-
-    <br>
-    <label>
-        <input type="text" name="realPassword" placeholder="Действующий пароль" th:value="${realPassword}">
+        <div style="width: 400px; margin: 0 20%; text-align: center">
+            <h3 style="">Для подтверждения изменений введите действующий пароль:</h3>
+            <label>
+        <input type="password" name="realPassword" placeholder="Действующий пароль" th:value="${realPassword}">
     </label>
     <span style="color:red" th:text="${uncorrectedPassword}"></span>
-    <br>
     <!--    <input type="password" name="password" placeholder="Пароль">-->
     <!-- <input type="text" name="role" placeholder="ROLE_ADMIN or ROLE_USER?"> -->
-    <br>
-
-    <div><input type="submit" value="Изменить данные"/></div>
+    <div style="margin: 5%">
+        <input type="submit" value="Изменить данные"/></div>
+        </div>
 </form>
-
-<br>
-<br>
-<a href="/profile">Назад</a>
-
 </body>
 </html>
