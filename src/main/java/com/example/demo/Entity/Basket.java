@@ -17,10 +17,15 @@ public class Basket {
     private long id;
 
     private long dateCreate;
+
     private int amount;
+
     private long price;
+
     private int available;
+
     private String nameOfProduct;
+
     private String pathOfPicture;
 
     @ManyToOne

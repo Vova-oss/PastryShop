@@ -58,7 +58,7 @@ public class CustomFilter extends UsernamePasswordAuthenticationFilter {
 
         User user = userService.findUserByName(request.getParameter("username"));
 
-        if(user.getActivationCode() != null) {
+        if(user!= null && user.getActivationCode() != null) {
             setAuthenticationFailureHandler(new SimpleUrlAuthenticationFailureHandler(){
                 @Override
                 public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
