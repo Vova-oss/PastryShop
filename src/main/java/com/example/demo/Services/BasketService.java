@@ -4,12 +4,10 @@ import com.example.demo.Entity.Basket;
 import com.example.demo.Entity.Product;
 import com.example.demo.Entity.User;
 import com.example.demo.Repository.BasketRepository;
-import org.apache.catalina.security.SecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import javax.swing.plaf.basic.BasicTableHeaderUI;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,7 +27,7 @@ public class BasketService {
     @Transactional
     public void saveOrUpdateOneAmountOfProduct(Product product) {
         List<Basket> baskets = basketRepository.findByNameOfProduct(product.getTypeProduct());
-        User user = userService.findUserByName(SecurityContextHolder.getContext().getAuthentication().getName());
+        User user = userService.findUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         boolean flag = false;
         for (Basket basket : baskets) {
             if (basket.getUser().getId() == user.getId()) {
@@ -76,7 +74,7 @@ public class BasketService {
     public void deleteAllBasketsOfPerson() {
 
         List<Basket> list = basketRepository.findAllByUserId(
-                userService.findUserByName(
+                userService.findUserByEmail(
                         SecurityContextHolder.
                                 getContext().
                                 getAuthentication().
@@ -98,7 +96,7 @@ public class BasketService {
     public List<Basket> getAllBasketCurrentUser() {
         List<Basket> listForDelete = new ArrayList<>();
         List<Basket> list = basketRepository.findAllByUserId(
-                userService.findUserByName(
+                userService.findUserByEmail(
                         SecurityContextHolder.
                                 getContext().
                                 getAuthentication().
@@ -129,7 +127,7 @@ public class BasketService {
     @Transactional
     public void addByNameOfProduct(String nameOfProduct) {
         List<Basket> baskets = basketRepository.findByNameOfProduct(nameOfProduct);
-        User user = userService.findUserByName(SecurityContextHolder.getContext().getAuthentication().getName());
+        User user = userService.findUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         for (Basket basket : baskets) {
             if (basket.getUser().getId() == user.getId()) {
                 basket.setAmount(basket.getAmount() + 1);
@@ -142,7 +140,7 @@ public class BasketService {
     @Transactional
     public void deleteByNameOfProduct(String nameOfProduct) {
         List<Basket> baskets = basketRepository.findByNameOfProduct(nameOfProduct);
-        User user = userService.findUserByName(SecurityContextHolder.getContext().getAuthentication().getName());
+        User user = userService.findUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         for (Basket basket : baskets) {
             if (basket.getUser().getId() == user.getId()) {
                 basket.setAmount(basket.getAmount() - 1);

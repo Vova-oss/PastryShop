@@ -95,9 +95,9 @@
             <th><span style="color:red" th:text="${name}"></span></th>
         </tr>
         <tr>
-            <th>Email</th>
-            <th><input type="text" name="email" th:value="${currentEmail}"></th>
-            <th><span style="color:red" th:text="${email}"></span></th>
+            <th>Адрес</th>
+            <th><input type="text" name="address" th:value="${currentAddress}"></th>
+            <th><span style="color:red" th:text="${address}"></span></th>
         </tr>
         <tr>
             <th>Телефонный номер</th>
@@ -105,7 +105,7 @@
             <th><span style="color:red" th:text="${telephone_number}"></span></th>
         </tr>
         <tr>
-            <input type="hidden" name="login" placeholder="Логин" th:value="${currentLogin}">
+            <input type="hidden" name="email" placeholder="Email" th:value="${currentEmail}">
             <th>Новый пароль</th>
             <th><input type="password" name="password" th:value="${currentPassword}"></th>
             <th><span style="color:red" th:text="${password}"></span></th>

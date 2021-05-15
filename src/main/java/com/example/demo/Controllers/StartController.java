@@ -18,7 +18,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import javax.websocket.server.PathParam;
 import java.util.List;
 
 @Controller
@@ -38,7 +37,7 @@ public class StartController {
 
     @GetMapping("/postCookie")
     public String setCooliePost(HttpServletResponse response){
-        User user = userService.findUserByName(SecurityContextHolder.getContext().getAuthentication().getName());
+        User user = userService.findUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
 
 //        Cookie pCookie = new Cookie("password",user.getPassword());
 //        Cookie lCookie = new Cookie("login", user.getLogin());
@@ -59,12 +58,12 @@ public class StartController {
                                 Model model,
                                 HttpServletRequest request){
 
-        if(userService.findUserByName(SecurityContextHolder.getContext().getAuthentication().getName())!=null){
+        if(userService.findUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName())!=null){
             return "redirect:/postCookie";
         }
 
         if(error != null){
-            model.addAttribute("IncorrectData", "Неправильный логин или пароль");
+            model.addAttribute("IncorrectData", "Неправильный email или пароль");
         }
         else{
             Cookie[] cookies = request.getCookies();
@@ -87,7 +86,7 @@ public class StartController {
     @GetMapping("/registration")
     public String registration(){
 
-        if(userService.findUserByName(SecurityContextHolder.getContext().getAuthentication().getName())!=null){
+        if(userService.findUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName())!=null){
             return "redirect:/postCookie";
         }
 
@@ -96,7 +95,7 @@ public class StartController {
 
     @GetMapping("/")
     public String main(){
-        if(userService.findUserByName(SecurityContextHolder.getContext().getAuthentication().getName())!=null){
+        if(userService.findUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName())!=null){
             return "redirect:/postCookie";
         }
         return "main";
@@ -106,17 +105,18 @@ public class StartController {
     @GetMapping("/registrationAction")
     public String registrationAction(@ModelAttribute @Valid User user, Errors errors, Model model){
 
-        if(userService.findUserByName(SecurityContextHolder.getContext().getAuthentication().getName())!=null){
+        if(userService.findUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName())!=null){
             return "redirect:/postCookie";
         }
 
         if(errors.hasErrors() || userService.checkingExistingUsers(user)) {
-            model.addAttribute("currentLogin",user.getLogin());
+//            model.addAttribute("currentLogin",user.getLogin());
             model.addAttribute("currentPassword",user.getPassword());
             model.addAttribute("currentEmail",user.getEmail());
             model.addAttribute("currentName",user.getName());
             model.addAttribute("currentSurname",user.getSurname());
             model.addAttribute("currentTelephoneNumber",user.getTelephone_number());
+            model.addAttribute("currentAddress",user.getTelephone_number());
 
             List<FieldError> list = errors.getFieldErrors();
             for (FieldError f : list) {
@@ -124,7 +124,7 @@ public class StartController {
             }
 
             if (userService.checkingExistingUsers(user)) {
-                model.addAttribute("login", "Пользователь с таким логином уже существует");
+                model.addAttribute("login", "Пользователь с таким email'ом уже существует");
             }
             return "/registration";
         }

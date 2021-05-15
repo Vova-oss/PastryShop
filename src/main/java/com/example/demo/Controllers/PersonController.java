@@ -8,7 +8,6 @@ import com.example.demo.Services.ProductService;
 import com.example.demo.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,10 +37,11 @@ public class PersonController {
 
     @GetMapping("/profile")
     public String profile(Model model){
-        User user = userService.findUserByName(SecurityContextHolder.getContext().getAuthentication().getName());
+        User user = userService.findUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         model.addAttribute("name",user.getName());
         model.addAttribute("surname",user.getSurname());
-        model.addAttribute("login",user.getLogin());
+//        model.addAttribute("login",user.getLogin());
+        model.addAttribute("address",user.getAddress());
         model.addAttribute("email",user.getEmail());
         model.addAttribute("telephoneNumber",user.getTelephone_number());
 
@@ -107,6 +107,7 @@ public class PersonController {
         basketService.deleteAllBasketsOfPerson();
 
         model.addAttribute("basketIsEmpty",basketService.chekBasketIsEmpty());
+        model.addAttribute("address", userService.findUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName()).getAddress());
         model.addAttribute("result", 3);
 
 
@@ -131,7 +132,7 @@ public class PersonController {
         // Проверка на количество (в корзине < в бд)
         basketService.editingAmount();
 
-        User user = userService.findUserByName(SecurityContextHolder.getContext().getAuthentication().getName());
+        User user = userService.findUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
 
         model.addAttribute("product",productService.findAllByUserIdWithNull(user.getId()));
         return "personalAccount";
@@ -169,9 +170,10 @@ public class PersonController {
                  psw = c.getValue();
         }
 
-        User user = userService.findUserByName(SecurityContextHolder.getContext().getAuthentication().getName());
-        model.addAttribute("currentLogin",user.getLogin());
+        User user = userService.findUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+//        model.addAttribute("currentLogin",user.getLogin());
         model.addAttribute("currentPassword",psw);
+        model.addAttribute("currentAddress",user.getAddress());
         model.addAttribute("currentEmail",user.getEmail());
         model.addAttribute("currentName",user.getName());
         model.addAttribute("currentSurname",user.getSurname());
@@ -187,11 +189,12 @@ public class PersonController {
                               @RequestParam("realPassword") String realPassword,
                               HttpServletResponse response){
 
-        User currentUser = userService.findUserByName(SecurityContextHolder.getContext().getAuthentication().getName());
+        User currentUser = userService.findUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         if(errors.hasErrors()
 //                || userService.checkingExistingUsers(user)
                 || !passwordEncoder.matches(realPassword, currentUser.getPassword())) {
-            model.addAttribute("currentLogin",user.getLogin());
+//            model.addAttribute("currentLogin",user.getLogin());
+            model.addAttribute("currentAddress",user.getAddress());
             model.addAttribute("currentPassword",user.getPassword());
             model.addAttribute("currentEmail",user.getEmail());
             model.addAttribute("currentName",user.getName());
@@ -213,7 +216,7 @@ public class PersonController {
             return "/editProfile";
         }
 
-        userService.editProfile(user, currentUser.getLogin());
+        userService.editProfile(user, currentUser.getEmail());
 
         Cookie pCookie = new Cookie("password", user.getPassword());
         pCookie.setMaxAge(60*60*24*365);

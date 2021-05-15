@@ -26,8 +26,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.jdbcAuthentication().dataSource(dataSource)
                 .passwordEncoder(encoder())
                 .usersByUsernameQuery(
-                        "select login, password, '1' from userps where login=?")
-                .authoritiesByUsernameQuery("select login, role from userps where login=?");
+                        "select email, password, '1' from userps where email=?")
+                .authoritiesByUsernameQuery("select email, role from userps where email=?");
     }
 
     @Override
@@ -47,7 +47,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/images/*").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .addFilterBefore(new CustomFilter("/login",authenticationManager(), userService), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(
+                        new CustomFilter("/login",authenticationManager(), userService),
+                        UsernamePasswordAuthenticationFilter.class)
                 .formLogin()
                 .loginPage("/login")
                 .permitAll()
@@ -57,12 +59,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll();
     }
 
-//    @Override
-//    public void configure(WebSecurity web)  {
-//        web
-//                .ignoring()
-//                .antMatchers("/h2-console/**");
-//    }
 
     @Bean
     public PasswordEncoder encoder(){

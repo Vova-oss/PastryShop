@@ -7,7 +7,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import javax.validation.constraints.Null;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,7 +19,8 @@ public class UserService {
 
     @Transactional
     public boolean checkingExistingUsers(User user){
-        return userRepository.findByLogin(user.getLogin()) != null;
+//        return userRepository.findByLogin(user.getLogin()) != null;
+        return userRepository.findByEmail(user.getEmail()) != null;
     }
 
     @Transactional
@@ -36,8 +36,8 @@ public class UserService {
 
     @Transactional
     //На самом деле он находит по логину!!!
-    public User findUserByName(String name) {
-        return userRepository.findByLogin(name);
+    public User findUserByEmail(String name) {
+        return userRepository.findByEmail(name);
     }
 
     @Transactional
@@ -45,14 +45,15 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public void editProfile(User user, String login){
-        User fromDb = findUserByName(login);
-        fromDb.setLogin(user.getLogin());
+    public void editProfile(User user, String email){
+        User fromDb = findUserByEmail(email);
+//        fromDb.setLogin(user.getLogin());
         fromDb.setEmail(user.getEmail());
         fromDb.setPassword(passwordEncoder.encode(user.getPassword()));
         fromDb.setName(user.getName());
         fromDb.setSurname(user.getSurname());
         fromDb.setTelephone_number(user.getTelephone_number());
+        fromDb.setAddress(user.getAddress());
         userRepository.save(fromDb);
     }
 
