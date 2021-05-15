@@ -32,10 +32,6 @@ public class User {
     @Size(min = 1, message = "Минимальная длина имени = 1")
     private String name;
 
-//    @NotBlank(message = "Некорректные данные")
-//    @Size(min = 1, message = "Минимальная длина логина = 1")
-//    private String login;
-
     @NotBlank(message = "Некорректные данные")
     @Size(min = 1, message = "Минимальная длина пароля = 1")
     private String password;
@@ -46,7 +42,7 @@ public class User {
 
     private String role = "ROLE_USER";
 
-    @Size(min = 1, message = "Минимальная длина пароля = 1")
+    @Size(min = 1, message = "Впишите свой адрес")
     private String address;
 
     @NotBlank(message = "Некорректные данные")
