@@ -90,7 +90,7 @@
         <tr>
 
             <th>
-                <img width="100px" height="100px" th:src="@{${prod.pathOfPicture}}" alt="" />
+                <img width="150px" height="100px" th:src="@{${prod.pathOfPicture}}"  />
             </th>
             <th>[[${prod.typeProduct}]]</th>
             <th>[[${prod.price}]] рублей</th>
@@ -98,14 +98,14 @@
 
             <th>
                 <input class= "inp" value="Удалить" type="submit" name="operation">
-                <input  class="inp" style="width: 60px" type="number" name="amount_of_product" min="1" th:attr="placeholder=${prod.typeProduct}==${nameOfProduct} ? ${nullAmount} : 'N-ое количество'">
+                <input  class="inp" style="width: 60px" type="number" name="amount_of_product" min="1" th:attr="placeholder=${prod.typeProduct}==${nameOfProduct} ? ${nullAmount} : 'N-ое количество', title=${prod.typeProduct}==${nameOfProduct} ? ${nullAmount} : 'N-ое количество'">
                 <input class= "inp" value="Добавить" type="submit" name="operation">
                 <input type="hidden" name="nameOfProduct" th:value="${prod.typeProduct}">
                 <input  class= "inp" style="margin: 2%" value="Стереть товар" type="submit" name="operation">
             </th>
 
             <th>
-                <input class="inp"  style="width: 60px" type="number" name="new_price" min="1" th:attr="placeholder=${prod.typeProduct}==${nameOfProduct} ? ${nullPrice} : 'Новая цена'">
+                <input class="inp"  style="width: 60px" type="number" name="new_price" min="1" th:attr="placeholder=${prod.typeProduct}==${nameOfProduct} ? ${nullPrice} : 'Новая цена', title=${prod.typeProduct}==${nameOfProduct} ? ${nullPrice} : 'Новая цена'">
                 <input class="inp" style="margin: 2%" value="Изменить цену" type="submit" name="operation">
             </th>
         </tr>
