@@ -79,7 +79,7 @@
         }
 
         #Spreed tr {
-            border-bottom: 1px solid #ddd;
+            border-bottom: 3px solid #ddd;
             text-align:center;
         }
         #Spreed tr.header, #Spreed tr:hover {
@@ -127,8 +127,10 @@
             filter = input.value.toUpperCase();
             table = document.getElementById("Spreed");
             tr = table.getElementsByTagName("tr");
-            sbn = document.getElementById("searchByName");
-            sbn.setAttribute("value", filter);
+            sbn = document.getElementsByClassName("searchByName");
+            for( i=0;i<sbn.length;i++) {
+                sbn[i].setAttribute("value", filter);
+            }
 
             for (i = 1; i < tr.length; i++) {
                 td = tr[i].getElementsByTagName("th")[1];
@@ -251,7 +253,7 @@
 
 </table>
 <table  id="Spreed">
-    <tr>
+    <tr class="header">
         <th>Картинка</th>
         <th>Название</th>
         <th>Цена (₽)</th>
@@ -270,7 +272,7 @@
                 <input class="add" value="Добавить в корзину"
                        type="submit" th:attr="disabled=${prod.amount}>0 ? false : true">
                 <input type="hidden" name="product_id" th:value="${prod.id}"/>
-                <input id="searchByName" type="hidden" name="searchByName"/>
+                <input class="searchByName" type="hidden" name="searchByName"/>
             </th>
 
     </form>
