@@ -132,7 +132,7 @@
             tr = table.getElementsByTagName("tr");
 
             for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[1];
+                td = tr[i].getElementsByTagName("th")[1];
                 if (td) {
                     txtValue = td.textContent || td.innerText;
                     if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -152,8 +152,8 @@
                 rows = tab.rows;
                 for (i = 1; i < (rows.length - 1); i++) {
                     shouldflag = false;
-                    id1 = rows[i].getElementsByTagName("TD")[2];
-                    id2 = rows[i + 1].getElementsByTagName("TD")[2];
+                    id1 = rows[i].getElementsByTagName("TH")[2];
+                    id2 = rows[i + 1].getElementsByTagName("TH")[2];
                     if (Number(id1.innerHTML) > Number(id2.innerHTML)) {
                         shouldflag = true;
                         break;
@@ -174,8 +174,8 @@
                 rows = tab.rows;
                 for (i = 1; i < (rows.length - 1); i++) {
                     shouldflag = false;
-                    id1 = rows[i].getElementsByTagName("TD")[3];
-                    id2 = rows[i + 1].getElementsByTagName("TD")[3];
+                    id1 = rows[i].getElementsByTagName("TH")[3];
+                    id2 = rows[i + 1].getElementsByTagName("TH")[3];
                     if (Number(id1.innerHTML) > Number(id2.innerHTML)) {
                         shouldflag = true;
                         break;
@@ -205,14 +205,14 @@
     <tr class="header">
         <th>Картинка</th>
         <th>Название</th>
-        <th>Цена</th>
+        <th>Цена (₽)</th>
         <th>Количество</th>
         <th>Выбор товара</th>
     </tr>
     <form th:each="prod: ${product}" method="post" action="/check">
         <tr>
             <th>
-                <img width="100px" height="100px" th:src="@{${prod.pathOfPicture}}" alt="" />
+                <img width="150px" height="100px" th:src="@{${prod.pathOfPicture}}" alt="" />
             </th>
             <th>[[${prod.typeProduct}]]</th>
             <th>[[${prod.price}]] рублей</th>
@@ -220,7 +220,7 @@
             <th>
                 <input type="hidden" name="product_id" th:value="${prod.id}"/>
                 <input class="add" value="Добавить в корзину"
-                       type="submit" th:attr="disabled=${prod.amount}>0 ? false : true">
+                      onclick="return false" type="submit" th:attr="disabled=${prod.amount}>0 ? false : true">
             </th>
         </tr>
     </form>
