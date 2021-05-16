@@ -130,7 +130,7 @@
             sbn = document.getElementById("searchByName");
             sbn.setAttribute("value", filter);
 
-            for (i = 0; i < tr.length; i++) {
+            for (i = 1; i < tr.length; i++) {
                 td = tr[i].getElementsByTagName("th")[1];
                 if (td) {
                     txtValue = td.textContent || td.innerText;
@@ -151,7 +151,7 @@
                 while (flag) {
                     flag = false;
                     rows = tab.rows;
-                    for (i = 0; i < (rows.length - 1); i++) {
+                    for (i = 1; i < (rows.length - 1); i++) {
                         shouldflag = false;
                         id1 = rows[i].getElementsByTagName("TH")[2];
                         id2 = rows[i + 1].getElementsByTagName("TH")[2];
@@ -171,7 +171,7 @@
                 while (flag) {
                     flag = false;
                     rows = tab.rows;
-                    for (i = 0; i < (rows.length - 1); i++) {
+                    for (i = 1; i < (rows.length - 1); i++) {
                         shouldflag = false;
                         id1 = rows[i].getElementsByTagName("TH")[2];
                         id2 = rows[i + 1].getElementsByTagName("TH")[2];
@@ -196,7 +196,7 @@
                 while (flag) {
                     flag = false;
                     rows = tab.rows;
-                    for (i = 0; i < (rows.length - 1); i++) {
+                    for (i = 1; i < (rows.length - 1); i++) {
                         shouldflag = false;
                         id1 = rows[i].getElementsByTagName("TH")[3];
                         id2 = rows[i + 1].getElementsByTagName("TH")[3];
@@ -216,7 +216,7 @@
                 while (flag) {
                     flag = false;
                     rows = tab.rows;
-                    for (i = 0; i < (rows.length - 1); i++) {
+                    for (i = 1; i < (rows.length - 1); i++) {
                         shouldflag = false;
                         id1 = rows[i].getElementsByTagName("TH")[3];
                         id2 = rows[i + 1].getElementsByTagName("TH")[3];
