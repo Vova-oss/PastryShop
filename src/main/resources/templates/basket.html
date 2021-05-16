@@ -171,16 +171,17 @@
         <th></th>
         <th>ИТОГО: </th>
         <th>[[ ${allPrice} ]]</th>
-        <th colspan="3" style="background: rgba(19,215,75,0.5);"><a href="/placeAnOrder">Оформить заказ</a></th>
+        <th colspan="3">
+            <a href="/placeAnOrder">
+                <div style="background: rgba(5,250,17,0.5); border-radius: 20px; padding: 10px">Оформить заказ</div>
+            </a>
+        </th>
 
 
     </tr>
 </table>
 
 <h2 style="text-align: center" th:if="${basketIsEmpty} == true"> Корзина пуста </h2>
-
-
-
 
 
 
