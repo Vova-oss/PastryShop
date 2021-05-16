@@ -156,7 +156,7 @@
     <form th:each="prod: ${products}" method="post" action="/actionInBasket">
         <tr>
             <th>
-                <img width="100px" height="100px" th:src="@{${prod.pathOfPicture}}" alt="" />
+                <img width="150px" height="100px" th:src="@{${prod.pathOfPicture}}" alt="" />
             </th>
             <th>[[${prod.nameOfProduct}]]</th>
             <th>[[${prod.price}]]</th>

@@ -32,7 +32,8 @@ public class EmailService {
         message.setFrom("pastryshopps@gmail.com");
         message.setSubject("Подтверждение авторизации");
         message.setText(String.format("Доброго времени суток, %s! \n"
-                            + "Для подтвержения вашей почты на сервисе PastryShop перейдите по сслыке: http://localhost:7777/activate/%s ", userName, code));
+                            + "Для подтвержения вашей почты на сервисе PastryShop перейдите по сслыке: " +
+                "http://localhost:7777/activate/%s ", userName, code));
 
         javaMailSender.send(message);
     }
@@ -44,7 +45,6 @@ public class EmailService {
         MimeMessageHelper helper;
 
         try {
-
 
             List<User> users = userService.findAllUsers();
             for(User user:users){
@@ -64,7 +64,5 @@ public class EmailService {
         } catch (MessagingException e) {
             e.printStackTrace();
         }
-
-
     }
 }

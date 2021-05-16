@@ -22,6 +22,34 @@ public class CustomFilter extends UsernamePasswordAuthenticationFilter {
 
     UserService userService;
 
+    @Override
+    public Authentication attemptAuthentication(HttpServletRequest request,
+                                                HttpServletResponse response)
+            throws AuthenticationException {
+
+        User user = userService.findUserByEmail(request.getParameter("username"));
+
+        if(user!= null && user.getActivationCode() != null) {
+            setAuthenticationFailureHandler(new SimpleUrlAuthenticationFailureHandler(){
+                @Override
+                public void onAuthenticationFailure(HttpServletRequest request,
+                                                    HttpServletResponse response,
+                                                    AuthenticationException exception)
+                        throws IOException, ServletException {
+                    super.setDefaultFailureUrl("/login?afterR");
+                    super.onAuthenticationFailure(request, response, exception);
+                }
+            });
+            throw new AuthenticationException("BadErrorGoodNotError") {
+                @Override
+                public String getMessage() {
+                    return super.getMessage();
+                }
+            };
+        }
+        return super.attemptAuthentication(request,response);
+    }
+
     public CustomFilter(String url, AuthenticationManager authenticationManager, UserService userService) {
 
         this.userService = userService;
@@ -53,26 +81,4 @@ public class CustomFilter extends UsernamePasswordAuthenticationFilter {
         setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher(url,HttpMethod.POST.name()));
     }
 
-    @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-
-        User user = userService.findUserByEmail(request.getParameter("username"));
-
-        if(user!= null && user.getActivationCode() != null) {
-            setAuthenticationFailureHandler(new SimpleUrlAuthenticationFailureHandler(){
-                @Override
-                public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-                    super.setDefaultFailureUrl("/login?afterR");
-                    super.onAuthenticationFailure(request, response, exception);
-                }
-            });
-            throw new AuthenticationException("BadErrorGoodNotError") {
-                @Override
-                public String getMessage() {
-                    return super.getMessage();
-                }
-            };
-        }
-        return super.attemptAuthentication(request,response);
-    }
 }

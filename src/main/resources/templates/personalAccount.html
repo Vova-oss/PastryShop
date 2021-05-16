@@ -150,7 +150,7 @@
             while (flag) {
                 flag = false;
                 rows = tab.rows;
-                for (i = 1; i < (rows.length - 1); i++) {
+                for (i = 0; i < (rows.length - 1); i++) {
                     shouldflag = false;
                     id1 = rows[i].getElementsByTagName("TH")[2];
                     id2 = rows[i + 1].getElementsByTagName("TH")[2];
@@ -172,7 +172,7 @@
             while (flag) {
                 flag = false;
                 rows = tab.rows;
-                for (i = 1; i < (rows.length - 1); i++) {
+                for (i = 0; i < (rows.length - 1); i++) {
                     shouldflag = false;
                     id1 = rows[i].getElementsByTagName("TH")[3];
                     id2 = rows[i + 1].getElementsByTagName("TH")[3];
@@ -201,7 +201,7 @@
     <button onclick="sortingprice()" class="def">Сортировка по цене</button>
     <button onclick="sortingostatok()" class="def">Сортировка по количеству</button>
 </div>
-<table id="Spreed">
+<table>
     <tr class="header">
         <th>Картинка</th>
         <th>Название</th>
@@ -209,21 +209,27 @@
         <th>Количество</th>
         <th>Выбор товара</th>
     </tr>
-    <form th:each="prod: ${product}" method="post" action="/check">
-        <tr>
+
+</table>
+<table  id="Spreed">
+    <tr th:each="prod: ${product}">
+    <form  method="post" action="/check">
+
             <th>
                 <img width="150px" height="100px" th:src="@{${prod.pathOfPicture}}" alt="" />
             </th>
             <th>[[${prod.typeProduct}]]</th>
-            <th>[[${prod.price}]] рублей</th>
+            <th>[[${prod.price}]]</th>
             <th>[[${prod.amount}]]</th>
             <th>
                 <input type="hidden" name="product_id" th:value="${prod.id}"/>
                 <input class="add" value="Добавить в корзину"
-                      onclick="return false" type="submit" th:attr="disabled=${prod.amount}>0 ? false : true">
+                       type="submit" th:attr="disabled=${prod.amount}>0 ? false : true">
             </th>
-        </tr>
+
     </form>
+
+    </tr>
 </table>
 </body>
 </html>
