@@ -79,7 +79,7 @@
         }
 
         #Spreed tr {
-            border-bottom: 1px solid #ddd;
+            border-bottom: 3px solid #ddd;
             text-align:center;
         }
         #Spreed tr.header, #Spreed tr:hover {
@@ -119,6 +119,8 @@
         }
     </style>
     <script type="text/javascript">
+
+
         reverse1=false;
         reverse2=false;
 
@@ -128,11 +130,11 @@
             table = document.getElementById("Spreed");
             tr = table.getElementsByTagName("tr");
 
+
             sbn = document.getElementsByClassName("searchByName");
             for (i = 0; i< sbn.length;i++){
                 sbn[i].setAttribute("value",filter);
             }
-
 
             for (i = 1; i < tr.length; i++) {
                 td = tr[i].getElementsByTagName("th")[1];
@@ -150,7 +152,6 @@
             i=1;
             tab = document.getElementById("Spreed");
             flag = true;
-
             if(!reverse1) {
                 reverse1=true;
                 while (flag) {
@@ -256,7 +257,10 @@
 
 </table>
 <table  id="Spreed">
+<<<<<<< HEAD
 
+=======
+>>>>>>> e43ccb63f6219a110c96f3aa683465f3af5b8316
     <tr class="header">
         <th>Картинка</th>
         <th>Название</th>
@@ -264,7 +268,10 @@
         <th>Количество</th>
         <th>Выбор товара</th>
     </tr>
+<<<<<<< HEAD
 
+=======
+>>>>>>> e43ccb63f6219a110c96f3aa683465f3af5b8316
     <tr th:each="prod: ${product}">
     <form  method="post" action="/check">
             <th>
