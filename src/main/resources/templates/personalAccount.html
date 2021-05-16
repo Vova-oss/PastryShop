@@ -125,11 +125,15 @@
     </style>
     <script type="text/javascript">
 
+
         function myFunction() {
             input = document.getElementById("FIND");
             filter = input.value.toUpperCase();
             table = document.getElementById("Spreed");
             tr = table.getElementsByTagName("tr");
+
+            sbn = document.getElementById("searchByName");
+            sbn.setAttribute("value", filter);
 
             for (i = 0; i < tr.length; i++) {
                 td = tr[i].getElementsByTagName("th")[1];
@@ -189,7 +193,7 @@
         }
     </script>
 </head>
-<body th:style="'background-image: url(../other/lavka.jpg);'">
+<body th:style="'background-image: url(../other/lavka.jpg);'" onload="myFunction()">
 <div class="topnav">
     <p style="font-family: tempus sans itc, fantasy; margin-left: 20%;float:left;text-align: center; font-size: 15px;
             text-decoration: none; color: white; "><b><i>PastryShop</i></b> is perhaps the best choice for sweets</p>
@@ -197,9 +201,9 @@
     <a href="/basket">Корзина</a>
 </div>
 <div style="clear: both; text-align: center; margin: 1%">
-    <input type="text" id="FIND" onkeyup="myFunction()" placeholder="Поиск по названию...">
-    <button onclick="sortingprice()" class="def">Сортировка по цене</button>
-    <button onclick="sortingostatok()" class="def">Сортировка по количеству</button>
+        <input type="text" id="FIND" onkeyup="myFunction()" placeholder="Поиск по названию..." th:value="${searchByName}">
+        <button onclick="sortingprice()" class="def">Сортировка по цене</button>
+        <button onclick="sortingostatok()" class="def">Сортировка по количеству</button>
 </div>
 <table>
     <tr class="header">
@@ -222,9 +226,10 @@
             <th>[[${prod.price}]]</th>
             <th>[[${prod.amount}]]</th>
             <th>
-                <input type="hidden" name="product_id" th:value="${prod.id}"/>
                 <input class="add" value="Добавить в корзину"
                        type="submit" th:attr="disabled=${prod.amount}>0 ? false : true">
+                <input type="hidden" name="product_id" th:value="${prod.id}"/>
+                <input id="searchByName" type="hidden" name="searchByName"/>
             </th>
 
     </form>

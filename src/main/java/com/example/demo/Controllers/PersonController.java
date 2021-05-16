@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Locale;
 
 
 @Controller
@@ -139,11 +140,15 @@ public class PersonController {
     }
 
     @PostMapping("/check")
-    public String trying(@RequestParam(name = "product_id") String id){
+    public String trying(@RequestParam(name = "product_id") String id, @RequestParam(name = "searchByName",required = false) String name, Model model){
+        System.out.println(name);
+        if(name != null)
+            model.addAttribute("searchByName",name.toLowerCase());
         Product product = productService.findById(id);
 
         basketService.saveOrUpdateOneAmountOfProduct(product);
-        return "redirect:/personalAccount";
+        return personalAccount(model);
+//        return "redirect:/personalAccount";
     }
 
     @PostMapping("/actionInBasket")
