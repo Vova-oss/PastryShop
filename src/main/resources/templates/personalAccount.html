@@ -247,16 +247,17 @@
         <button onclick="sortingostatok()" class="def">Сортировка по количеству</button>
 </div>
 <table class="tabhead">
+
+
+</table>
+<table  id="Spreed">
     <tr>
         <th>Картинка</th>
         <th>Название</th>
         <th>Цена (₽)</th>
-        <th">Количество</th>
+        <th>Количество</th>
         <th>Выбор товара</th>
     </tr>
-
-</table>
-<table  id="Spreed">
     <tr th:each="prod: ${product}">
     <form  method="post" action="/check">
             <th>
