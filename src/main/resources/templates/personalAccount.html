@@ -68,7 +68,7 @@
         #Spreed {
             border-collapse: collapse;
             width: 90%;
-            border: 1px solid #ddd;
+            border: 3px solid #ddd;
             font-size: 18px;
             margin: 2% 4%;
         }
@@ -120,7 +120,8 @@
     </style>
     <script type="text/javascript">
 
-
+        reverse1=false;
+        reverse2=false;
         function myFunction() {
             input = document.getElementById("FIND");
             filter = input.value.toUpperCase();
@@ -145,9 +146,8 @@
             i=1;
             tab = document.getElementById("Spreed");
             flag = true;
-            reverse=false;
-            if(!reverse) {
-                reverse=true;
+            if(!reverse1) {
+                reverse1=true;
                 while (flag) {
                     flag = false;
                     rows = tab.rows;
@@ -167,7 +167,7 @@
                 }
             }
             else{
-                reverse=false;
+                reverse1=false;
                 while (flag) {
                     flag = false;
                     rows = tab.rows;
@@ -191,9 +191,8 @@
             i=1;
             tab = document.getElementById("Spreed");
             flag = true;
-            reverse = false;
-            if (!reverse) {
-                reverse=true
+            if (!reverse2) {
+                reverse2=true
                 while (flag) {
                     flag = false;
                     rows = tab.rows;
@@ -213,7 +212,7 @@
                 }
             }
             else{
-                reverse=false;
+                reverse2=false;
                 while (flag) {
                     flag = false;
                     rows = tab.rows;
@@ -252,7 +251,7 @@
         <th>Картинка</th>
         <th>Название</th>
         <th>Цена (₽)</th>
-        <th>Количество</th>
+        <th">Количество</th>
         <th>Выбор товара</th>
     </tr>
 
