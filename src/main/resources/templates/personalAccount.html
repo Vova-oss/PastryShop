@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
+    <link rel="icon" th:href="@{other/fav.png}" type="image/png">
     <meta charset="UTF-8">
     <title>Лавка изделий</title>
     <style>
@@ -35,29 +36,23 @@
             background-color: #4CAF50;
             color: white;
         }
-        /*table {*/
-        /*    width: 1000px;*/
-        /*    margin: auto;*/
-        /*}*/
-        /*th {*/
-        /*    font-size: 13px;*/
-        /*    font-weight: normal;*/
-        /*    background: #b9c9fe;*/
-        /*    border-top: 4px solid #aabcfe;*/
-        /*    border-bottom: 1px solid white;*/
-        /*    color: #039;*/
-        /*    padding: 8px;*/
-        /*}*/
-        /*td {*/
-        /*    background: #e8edff;*/
-        /*    border-bottom: 1px solid white;*/
-        /*    color: #669;*/
-        /*    border-top: 1px solid transparent;*/
-        /*    padding: 8px;*/
-        /*}*/
-        /*tr:hover td {*/
-        /*    background: #ccddff;*/
-        /*}*/
+        .tabhead{
+            border-collapse: collapse;
+            width: 90%;
+            border: 1px solid #ddd;
+            font-size: 18px;
+            margin: 2% 4%;
+        }
+
+        .tabhead th {
+            padding: 12px;
+            text-align:center;
+        }
+
+        .tabhead tr {
+            border-bottom: 1px solid #ddd;
+            text-align:center;
+        }
         #FIND {
             background-position: 10px 12px;
             background-repeat: no-repeat;
@@ -131,7 +126,6 @@
             filter = input.value.toUpperCase();
             table = document.getElementById("Spreed");
             tr = table.getElementsByTagName("tr");
-
             sbn = document.getElementById("searchByName");
             sbn.setAttribute("value", filter);
 
@@ -151,21 +145,43 @@
             i=1;
             tab = document.getElementById("Spreed");
             flag = true;
-            while (flag) {
-                flag = false;
-                rows = tab.rows;
-                for (i = 0; i < (rows.length - 1); i++) {
-                    shouldflag = false;
-                    id1 = rows[i].getElementsByTagName("TH")[2];
-                    id2 = rows[i + 1].getElementsByTagName("TH")[2];
-                    if (Number(id1.innerHTML) > Number(id2.innerHTML)) {
-                        shouldflag = true;
-                        break;
+            reverse=false;
+            if(!reverse) {
+                while (flag) {
+                    flag = false;
+                    rows = tab.rows;
+                    for (i = 0; i < (rows.length - 1); i++) {
+                        shouldflag = false;
+                        id1 = rows[i].getElementsByTagName("TH")[2];
+                        id2 = rows[i + 1].getElementsByTagName("TH")[2];
+                        if (Number(id1.innerHTML) > Number(id2.innerHTML)) {
+                            shouldflag = true;
+                            break;
+                        }
+                    }
+                    if (shouldflag) {
+                        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                        flag = true;
                     }
                 }
-                if (shouldflag) {
-                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-                    flag = true;
+            }
+            else{
+                while (flag) {
+                    flag = false;
+                    rows = tab.rows;
+                    for (i = 0; i < (rows.length - 1); i++) {
+                        shouldflag = false;
+                        id1 = rows[i].getElementsByTagName("TH")[2];
+                        id2 = rows[i + 1].getElementsByTagName("TH")[2];
+                        if (Number(id1.innerHTML) < Number(id2.innerHTML)) {
+                            shouldflag = true;
+                            break;
+                        }
+                    }
+                    if (shouldflag) {
+                        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                        flag = true;
+                    }
                 }
             }
         }
@@ -173,21 +189,43 @@
             i=1;
             tab = document.getElementById("Spreed");
             flag = true;
-            while (flag) {
-                flag = false;
-                rows = tab.rows;
-                for (i = 0; i < (rows.length - 1); i++) {
-                    shouldflag = false;
-                    id1 = rows[i].getElementsByTagName("TH")[3];
-                    id2 = rows[i + 1].getElementsByTagName("TH")[3];
-                    if (Number(id1.innerHTML) > Number(id2.innerHTML)) {
-                        shouldflag = true;
-                        break;
+            reverse = false;
+            if (!reverse) {
+                while (flag) {
+                    flag = false;
+                    rows = tab.rows;
+                    for (i = 0; i < (rows.length - 1); i++) {
+                        shouldflag = false;
+                        id1 = rows[i].getElementsByTagName("TH")[3];
+                        id2 = rows[i + 1].getElementsByTagName("TH")[3];
+                        if (Number(id1.innerHTML) > Number(id2.innerHTML)) {
+                            shouldflag = true;
+                            break;
+                        }
+                    }
+                    if (shouldflag) {
+                        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                        flag = true;
                     }
                 }
-                if (shouldflag) {
-                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-                    flag = true;
+            }
+            else{
+                while (flag) {
+                    flag = false;
+                    rows = tab.rows;
+                    for (i = 0; i < (rows.length - 1); i++) {
+                        shouldflag = false;
+                        id1 = rows[i].getElementsByTagName("TH")[3];
+                        id2 = rows[i + 1].getElementsByTagName("TH")[3];
+                        if (Number(id1.innerHTML) < Number(id2.innerHTML)) {
+                            shouldflag = true;
+                            break;
+                        }
+                    }
+                    if (shouldflag) {
+                        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                        flag = true;
+                    }
                 }
             }
         }
@@ -205,8 +243,8 @@
         <button onclick="sortingprice()" class="def">Сортировка по цене</button>
         <button onclick="sortingostatok()" class="def">Сортировка по количеству</button>
 </div>
-<table>
-    <tr class="header">
+<table class="tabhead">
+    <tr>
         <th>Картинка</th>
         <th>Название</th>
         <th>Цена (₽)</th>
@@ -218,7 +256,6 @@
 <table  id="Spreed">
     <tr th:each="prod: ${product}">
     <form  method="post" action="/check">
-
             <th>
                 <img width="150px" height="100px" th:src="@{${prod.pathOfPicture}}" alt="" />
             </th>
